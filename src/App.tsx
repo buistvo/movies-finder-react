@@ -1,6 +1,6 @@
 import './App.css';
-import { Counter } from './components/counter/Counter';
-import { Search } from './components/search/Search';
+import { Counter } from './components/Counter/Counter';
+import { Search } from './components/Search/Search';
 
 function App() {
   return (
