@@ -4,7 +4,7 @@
 }
 
 .search-button {
-  background-color: #f65261;
+  background-color: var(--primary-red);
   color: #fff;
   border-radius: 2px;
   margin: 0.5rem;
