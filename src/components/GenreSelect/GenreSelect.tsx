@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './GenreSelect.css';
+
 interface InitialProps {
   genreList: string[];
   initialSelectedGenre?: string;
@@ -15,7 +16,7 @@ export function GenreSelect({
     initialSelectedGenre || genreList[0]
   );
 
-  function onGenreButtonClick(genre: string) {
+  function handleGenreButtonClick(genre: string) {
     setSelectedGenre(genre);
     onSelect(genre);
   }
@@ -26,7 +27,7 @@ export function GenreSelect({
         <button
           key={genre}
           className={selectedGenre === genre ? 'selected' : ''}
-          onClick={() => onGenreButtonClick(genre)}
+          onClick={() => handleGenreButtonClick(genre)}
         >
           {genre}
         </button>

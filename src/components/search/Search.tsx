@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import './Search.css';
 
 interface InitialProps {
@@ -7,17 +7,20 @@ interface InitialProps {
 }
 
 export function Search({ initialValue, onSearch }: InitialProps) {
-  const [state, setState] = useState(initialValue || '');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState(initialValue || '');
 
   function handleSearch() {
-    onSearch(state);
+    onSearch(value);
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       handleSearch();
     }
+  }
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    setValue(event.target.value);
   }
 
   return (
@@ -25,10 +28,9 @@ export function Search({ initialValue, onSearch }: InitialProps) {
       <input
         type="text"
         className="input"
-        value={state}
-        onChange={(e) => setState(e.target?.value || '')}
+        value={value}
+        onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        ref={inputRef}
         placeholder="What do you want to search?"
       />
       <button type="button" className="search-button" onClick={handleSearch}>
