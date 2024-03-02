@@ -1,13 +1,38 @@
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { GenreSelect } from './GenreSelect';
 import '@testing-library/jest-dom';
-const GENRE_LIST = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
 
-describe('GenreSelect', () => {
-  it('should return true', () => {
+describe('GenreSelect component', () => {
+  const genreList = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
+
+  it('renders all genres passed in props', () => {
+    render(<GenreSelect genreList={genreList} onSelect={() => {}} />);
+    genreList.forEach((genre) => {
+      const genreButton = screen.getByText(genre);
+      expect(genreButton).toBeInTheDocument();
+    });
+  });
+
+  it('highlights a selected genre passed in props', () => {
+    const initialSelectedGenre = genreList[1];
     render(
-      <GenreSelect genreList={GENRE_LIST} onSelect={(e) => console.log(e)} />
+      <GenreSelect
+        genreList={genreList}
+        initialSelectedGenre={initialSelectedGenre}
+        onSelect={() => {}}
+      />
     );
-    expect(true).toBe(true);
+    const selectedGenreButton = screen.getByText(initialSelectedGenre);
+    expect(selectedGenreButton).toHaveClass('selected');
+  });
+
+  it('after a click event on a genre button component calls "onChange" callback and passes correct genre in arguments', () => {
+    const mockOnSelect = jest.fn();
+
+    render(<GenreSelect genreList={genreList} onSelect={mockOnSelect} />);
+    const genreToSelect = genreList[2];
+    const genreButton = screen.getByText(genreToSelect);
+    fireEvent.click(genreButton);
+    expect(mockOnSelect).toHaveBeenCalledWith(genreToSelect);
   });
 });
