@@ -8,4 +8,5 @@ export default {
     '\\.(css)$': 'identity-obj-proxy',
   },
   setupFilesAfterEnv: ['./setupTests.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/cypress/'],
 };
