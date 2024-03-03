@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GenreSelect } from '../../components/GenreSelect/GenreSelect';
+import { GenreSelect } from '../components/GenreSelect/GenreSelect';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
