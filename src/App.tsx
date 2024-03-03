@@ -1,7 +1,7 @@
 import './App.css';
 import { GenreSelect } from './components/GenreSelect/GenreSelect';
 import { SearchForm } from './components/SearchForm/SearchForm';
-import { Counter } from './components/counter/Counter';
+import { Counter } from './components/Counter/Counter';
 
 const GENRE_LIST = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
 
