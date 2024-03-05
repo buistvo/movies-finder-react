@@ -1,28 +1,53 @@
-import { createUseStyles } from 'react-jss';
 import { Movie } from '../../types/movie';
 import { useState } from 'react';
+import styled from 'styled-components';
+import { Colors } from '../../Colors';
 
 interface MovieTileProps {
   movie: Movie;
   onClick?: (movie: Movie) => void;
 }
 
-const useStyles = createUseStyles({
-  container: {},
-});
+const Container = styled.div`
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  color: ${Colors.SecondaryText};
+`;
 
+const MovieInfo = styled.div`
+  display: flex;
+`;
+
+const Title = styled.span`
+  text-align: start;
+  width: 80%;
+  font-weight: 700;
+`;
+
+const Year = styled.span`
+  text-align: center;
+  border: 1px solid ${Colors.Background};
+  border-radius: 5px;
+  width: 20%;
+`;
+
+const GenreList = styled.div`
+  text-align: start;
+  font-size: 0.9rem;
+  font-weight: 500;
+`;
 export function MovieTile({ movie, onClick }: MovieTileProps) {
   const [movieState, setMovieState] = useState(movie || {});
-  const classes = useStyles();
 
   return (
-    <div className={classes.container}>
+    <Container>
       <img src={movieState.imageUrl}></img>
-      <div>
-        <span> {movieState.name} </span>
-        <span> {movieState.year} </span>
-      </div>
-      <span> {movieState.genreList.join(',')} </span>
-    </div>
+      <MovieInfo>
+        <Title> {movieState.name} </Title>
+        <Year> {movieState.year} </Year>
+      </MovieInfo>
+      <GenreList> {movieState.genreList.join(',')} </GenreList>
+    </Container>
   );
 }
