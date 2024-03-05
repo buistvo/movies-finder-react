@@ -1,11 +1,13 @@
 import { Movie } from '../../types/movie';
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../../Colors';
 
 interface MovieTileProps {
   movie: Movie;
   onClick?: (movie: Movie) => void;
+  onEdit?: (movie: Movie) => void;
+  onDelete?: (movie: Movie) => void;
 }
 
 const Container = styled.div`
@@ -63,29 +65,81 @@ const Ellipsis = styled.span`
   width: 20px;
 `;
 
+const ContextMenuContent = styled.div`
+  height: 100px;
+  width: 200px;
+  background-color: ${Colors.Workspace};
+  margin: 0.5rem;
+`;
+
+const MenuItem = styled.button`
+  width: 100%;
+  background-color: ${Colors.Workspace};
+  color: ${Colors.SecondaryText};
+`;
+
+const CloseContextMenuButton = styled.button`
+  position: absolute;
+  padding: 0;
+  background-color: ${Colors.Workspace};
+  color: white;
+  right: 0;
+  margin-right: 1rem;
+`;
+
+const MenuItemsWrapper = styled.div`
+  padding-top: 2rem;
+`;
+
 const StyledEllipsis = () => <Ellipsis>&#x2026;</Ellipsis>;
 
-export function MovieTile({ movie, onClick }: MovieTileProps) {
+export function MovieTile({
+  movie,
+  onClick,
+  onDelete,
+  onEdit,
+}: MovieTileProps) {
   const [movieState, setMovieState] = useState(movie || {});
   const [isContextMenuOpenState, setIsContextMenuOpenState] = useState(false);
 
-  function onContextMenuClick() {
-    setIsContextMenuOpenState(true);
+  function handleContextMenuClick() {
+    setIsContextMenuOpenState(!isContextMenuOpenState);
+  }
+
+  function handleEditClick() {
+    if (onEdit) onEdit(movieState);
+  }
+
+  function handleDeleteClick() {
+    if (onDelete) onDelete(movieState);
+  }
+
+  function handleMovieClick() {
+    if (onClick) onClick(movieState);
+    console.log('selected', movie);
   }
 
   return (
     <Container>
       <ContextMenu>
         {isContextMenuOpenState ? (
-          <div>context menu</div>
+          <ContextMenuContent>
+            <CloseContextMenuButton onClick={handleContextMenuClick}>
+              x
+            </CloseContextMenuButton>
+            <MenuItemsWrapper>
+              <MenuItem onClick={handleEditClick}>Edit</MenuItem>
+              <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
+            </MenuItemsWrapper>
+          </ContextMenuContent>
         ) : (
-          <ContextMenuButton onClick={onContextMenuClick}>
+          <ContextMenuButton onClick={handleContextMenuClick}>
             <StyledEllipsis></StyledEllipsis>
           </ContextMenuButton>
         )}
       </ContextMenu>
 
-      <img src={movieState.imageUrl}></img>
+      <img onClick={handleMovieClick} src={movieState.imageUrl}></img>
       <MovieInfo>
         <Title> {movieState.name} </Title>
         <Year> {movieState.year} </Year>
