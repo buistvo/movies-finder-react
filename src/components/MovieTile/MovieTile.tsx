@@ -29,7 +29,6 @@ export function MovieTile({
   onDelete,
   onEdit,
 }: MovieTileProps) {
-  const [movieState, setMovieState] = useState(movie || {});
   const [isContextMenuOpenState, setIsContextMenuOpenState] = useState(false);
 
   function handleContextMenuClick() {
@@ -37,16 +36,15 @@ export function MovieTile({
   }
 
   function handleEditClick() {
-    if (onEdit) onEdit(movieState);
+    if (onEdit) onEdit(movie);
   }
 
   function handleDeleteClick() {
-    if (onDelete) onDelete(movieState);
+    if (onDelete) onDelete(movie);
   }
 
   function handleMovieClick() {
-    if (onClick) onClick(movieState);
-    console.log('selected', movie);
+    if (onClick) onClick(movie);
   }
 
   return (
@@ -63,18 +61,25 @@ export function MovieTile({
             </div>
           </ContextMenuContent>
         ) : (
-          <ContextMenuButton onClick={handleContextMenuClick}>
+          <ContextMenuButton
+            data-testid="ellipsis-button"
+            onClick={handleContextMenuClick}
+          >
             <StyledEllipsis></StyledEllipsis>
           </ContextMenuButton>
         )}
       </ContextMenu>
 
-      <img onClick={handleMovieClick} src={movieState.imageUrl}></img>
+      <img
+        alt={movie.name}
+        onClick={handleMovieClick}
+        src={movie.imageUrl}
+      ></img>
       <MovieInfo>
-        <Title> {movieState.name} </Title>
-        <Year> {movieState.year} </Year>
+        <Title> {movie.name} </Title>
+        <Year> {movie.year} </Year>
       </MovieInfo>
-      <GenreList> {movieState.genreList.join(',')} </GenreList>
+      <GenreList> {movie.genreList.join(',')} </GenreList>
     </Container>
   );
 }

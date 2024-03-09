@@ -18,7 +18,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
   return (
     <MovieDetailsContainer>
       <ImageContainer>
-        <img src={movie.imageUrl}></img>
+        <img alt={movie.name} src={movie.imageUrl}></img>
       </ImageContainer>
       <InfoContainer>
         <InfoHeader>
