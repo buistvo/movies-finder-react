@@ -1,14 +1,14 @@
+import { MovieDetails } from '../components/MovieDetails/MovieDetails';
 import type { Meta, StoryObj } from '@storybook/react';
-import { MovieTile } from '../components/MovieTile/MovieTile';
 
 const meta = {
-  title: 'MovieTile',
-  component: MovieTile,
+  title: 'MovieDetails',
+  component: MovieDetails,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof MovieTile>;
+} satisfies Meta<typeof MovieDetails>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -22,6 +22,10 @@ export const InitialState: Story = {
       imageUrl: '/images/code-8.webp',
       genreList: ['Action', 'Drama'],
       year: '2024',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+      rating: 3.5,
+      duration: '2h 34m',
     },
   },
 };

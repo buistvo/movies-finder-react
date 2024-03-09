@@ -1,7 +1,18 @@
 import { Movie } from '../../types/movie';
-import { SyntheticEvent, useState } from 'react';
-import styled from 'styled-components';
-import { Colors } from '../../Colors';
+import { useState } from 'react';
+import {
+  CloseContextMenuButton,
+  Container,
+  ContextMenu,
+  ContextMenuButton,
+  ContextMenuContent,
+  Ellipsis,
+  GenreList,
+  MenuItem,
+  MovieInfo,
+  Title,
+  Year,
+} from './MovieTile.styled';
 
 interface MovieTileProps {
   movie: Movie;
@@ -9,85 +20,6 @@ interface MovieTileProps {
   onEdit?: (movie: Movie) => void;
   onDelete?: (movie: Movie) => void;
 }
-
-const Container = styled.div`
-  display: block;
-  width: fit-content;
-  height: fit-content;
-  position: relative;
-  color: ${Colors.SecondaryText};
-`;
-
-const MovieInfo = styled.div`
-  display: flex;
-`;
-
-const Title = styled.span`
-  text-align: start;
-  width: 80%;
-  font-weight: 700;
-`;
-
-const Year = styled.span`
-  text-align: center;
-  border: 1px solid ${Colors.Background};
-  border-radius: 5px;
-  width: 20%;
-`;
-
-const GenreList = styled.div`
-  text-align: start;
-  font-size: 0.9rem;
-  font-weight: 500;
-`;
-
-const ContextMenu = styled.div`
-  position: absolute;
-  right: 0;
-`;
-
-const ContextMenuButton = styled.button`
-  border-radius: 40px;
-  width: 40px;
-  height: 40px;
-  margin: 0.5rem;
-  background-color: ${Colors.Workspace};
-`;
-
-const Ellipsis = styled.span`
-  position: absolute;
-  top: 50%;
-  right: 18px;
-  transform: translateY(-50%);
-  color: white;
-  writing-mode: vertical-lr;
-  font-size: 2em;
-  width: 20px;
-`;
-
-const ContextMenuContent = styled.div`
-  display: grid;
-  height: 100px;
-  width: 200px;
-  background-color: ${Colors.Workspace};
-  margin: 0.5rem;
-`;
-
-const MenuItem = styled.button`
-  width: 100%;
-  background-color: ${Colors.Workspace};
-  color: ${Colors.SecondaryText};
-`;
-
-const CloseContextMenuButton = styled.button`
-  padding: 0;
-  background-color: ${Colors.Workspace};
-  color: white;
-  right: 0;
-  justify-self: end;
-  width: 30px;
-  height: 30px;
-`;
 
 const StyledEllipsis = () => <Ellipsis>&#x2026;</Ellipsis>;
 

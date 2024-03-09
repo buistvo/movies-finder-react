@@ -5,6 +5,8 @@ import { Counter } from './components/Counter/Counter';
 import { MovieTile } from './components/MovieTile/MovieTile';
 import styled from 'styled-components';
 import { Colors } from './Colors';
+import { MovieDetails } from './components/MovieDetails/MovieDetails';
+import { MovieDetailed } from './types/movie-detailed';
 const GENRE_LIST = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
 
 const movie = {
@@ -15,7 +17,20 @@ const movie = {
   genreList: ['Action', 'Drama'],
   year: '2024',
 };
+
+const movieDetails: MovieDetailed = {
+  ...movie,
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+  duration: '2h 34m',
+  rating: 3.5,
+};
+
 const MoviesContainer = styled.div`
+  background-color: ${Colors.Workspace};
+`;
+
+const DetailsContainer = styled.div`
   background-color: ${Colors.Workspace};
 `;
 
@@ -23,6 +38,9 @@ function App() {
   return (
     <>
       <Counter initialCount={0}></Counter>
+      <DetailsContainer>
+        <MovieDetails movie={movieDetails}></MovieDetails>
+      </DetailsContainer>
       <SearchForm onSearch={(query) => console.log(query)} />
       <MoviesContainer>
         <GenreSelect
