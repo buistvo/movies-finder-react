@@ -1,14 +1,14 @@
 import './App.css';
-import { Counter } from './components/Counter/Counter';
 import { GenreSelect } from './components/GenreSelect/GenreSelect';
 import { SearchForm } from './components/SearchForm/SearchForm';
+import { Counter } from './components/counter/Counter';
 
 const GENRE_LIST = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
 
 function App() {
   return (
     <>
-      <Counter initialCount={1}></Counter>
+      <Counter initialCount={0}></Counter>
       <SearchForm onSearch={(query) => console.log(query)} />
       <GenreSelect
         genreList={GENRE_LIST}
