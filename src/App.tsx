@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Colors } from './Colors';
 import { MovieDetails } from './components/MovieDetails/MovieDetails';
 import { MovieDetailed } from './types/movie-detailed';
+import { SortControl } from './components/SortControl/SortControl';
 const GENRE_LIST = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
 
 const movie = {
@@ -28,10 +29,27 @@ const movieDetails: MovieDetailed = {
 
 const MoviesContainer = styled.div`
   background-color: ${Colors.Workspace};
+  padding: 2rem;
 `;
 
 const DetailsContainer = styled.div`
   background-color: ${Colors.Workspace};
+  padding: 2rem;
+`;
+
+const DetailsHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: grey;
+  }
 `;
 
 function App() {
@@ -43,10 +61,19 @@ function App() {
       </DetailsContainer>
       <SearchForm onSearch={(query) => console.log(query)} />
       <MoviesContainer>
-        <GenreSelect
-          genreList={GENRE_LIST}
-          onSelect={(genre) => console.log(genre)}
-        />
+        <DetailsHeader>
+          <GenreSelect
+            genreList={GENRE_LIST}
+            onSelect={(genre) => console.log(genre)}
+          />
+          <SortControl
+            sortList={['Release Date', 'Title']}
+            onSortChange={(sortOption) =>
+              console.log('onSortChange', sortOption)
+            }
+          ></SortControl>
+        </DetailsHeader>
+
         <MovieTile movie={movie}></MovieTile>
       </MoviesContainer>
     </>
