@@ -66,6 +66,7 @@ const Ellipsis = styled.span`
 `;
 
 const ContextMenuContent = styled.div`
+  display: grid;
   height: 100px;
   width: 200px;
   background-color: ${Colors.Workspace};
@@ -79,16 +80,13 @@ const MenuItem = styled.button`
 `;
 
 const CloseContextMenuButton = styled.button`
-  position: absolute;
   padding: 0;
   background-color: ${Colors.Workspace};
   color: white;
   right: 0;
-  margin-right: 1rem;
-`;
-
-const MenuItemsWrapper = styled.div`
-  padding-top: 2rem;
+  justify-self: end;
+  width: 30px;
+  height: 30px;
 `;
 
 const StyledEllipsis = () => <Ellipsis>&#x2026;</Ellipsis>;
@@ -125,12 +123,12 @@ export function MovieTile({
         {isContextMenuOpenState ? (
           <ContextMenuContent>
             <CloseContextMenuButton onClick={handleContextMenuClick}>
-              x
+              {'\u2715'}
             </CloseContextMenuButton>
-            <MenuItemsWrapper>
+            <div>
               <MenuItem onClick={handleEditClick}>Edit</MenuItem>
               <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
-            </MenuItemsWrapper>
+            </div>
           </ContextMenuContent>
         ) : (
           <ContextMenuButton onClick={handleContextMenuClick}>
