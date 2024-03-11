@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { SortControl } from './SortControl';
+import { SortControl } from '../SortControl';
 import '@testing-library/jest-dom';
 
 const mockSortList = ['name', 'rating', 'year'];

@@ -70,11 +70,7 @@ export function MovieTile({
         )}
       </ContextMenu>
 
-      <img
-        alt={movie.name}
-        onClick={handleMovieClick}
-        src={movie.imageUrl}
-      ></img>
+      <img alt={movie.name} onClick={handleMovieClick} src={movie.imageUrl} />
       <MovieInfo>
         <Title> {movie.name} </Title>
         <Year> {movie.year} </Year>

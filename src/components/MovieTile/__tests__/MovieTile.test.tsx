@@ -1,25 +1,21 @@
 import { render, fireEvent } from '@testing-library/react';
-import { MovieTile } from './MovieTile';
+import { MovieTile } from '../MovieTile';
 import '@testing-library/jest-dom';
+import { MOVIE_MOCK } from '../../../mocks/movie';
 
 // Mock movie data
-const mockMovie = {
-  name: 'Movie Title',
-  year: '2022',
-  genreList: ['Action', 'Adventure'],
-  imageUrl: 'https://example.com/image.jpg',
-};
+const mockMovie = MOVIE_MOCK;
 
 describe('MovieTile component', () => {
   it('renders movie tile correctly', () => {
     const { getByText, getByAltText } = render(<MovieTile movie={mockMovie} />);
 
-    expect(getByText('Movie Title')).toBeInTheDocument();
-    expect(getByText('2022')).toBeInTheDocument();
-    expect(getByText('Action,Adventure')).toBeInTheDocument(); // Note: There is no space after the comma in the join() method
-    expect(getByAltText('Movie Title')).toHaveAttribute(
+    expect(getByText(mockMovie.name)).toBeInTheDocument();
+    expect(getByText(mockMovie.year)).toBeInTheDocument();
+    expect(getByText(mockMovie.genreList.join(','))).toBeInTheDocument(); // Note: There is no space after the comma in the join() method
+    expect(getByAltText(mockMovie.name)).toHaveAttribute(
       'src',
-      'https://example.com/image.jpg'
+      mockMovie.imageUrl
     );
   });
 
@@ -30,7 +26,7 @@ describe('MovieTile component', () => {
       <MovieTile movie={mockMovie} onClick={onClickMock} />
     );
 
-    fireEvent.click(getByAltText('Movie Title'));
+    fireEvent.click(getByAltText(mockMovie.name));
 
     expect(onClickMock).toHaveBeenCalled();
     expect(onClickMock).toHaveBeenCalledWith(mockMovie); // Ensure that onClick function is called with correct movie data

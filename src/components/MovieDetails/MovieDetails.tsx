@@ -15,21 +15,23 @@ interface MovieDetailsProps {
 }
 
 export function MovieDetails({ movie }: MovieDetailsProps) {
+  const { name, imageUrl, rating, genreList, year, description, duration } =
+    movie;
   return (
     <MovieDetailsContainer>
       <ImageContainer>
-        <img alt={movie.name} src={movie.imageUrl}></img>
+        <img alt={name} src={imageUrl} />
       </ImageContainer>
       <InfoContainer>
         <InfoHeader>
-          {movie.name} <Rating>{movie.rating}</Rating>
+          {name} <Rating>{rating}</Rating>
         </InfoHeader>
-        <Genre>{movie.genreList.join(', ')}</Genre>
+        <Genre>{genreList.join(', ')}</Genre>
         <AdditionalInfo>
-          <span> {movie.year}</span>
-          <span>{movie.duration}</span>
+          <span> {year}</span>
+          <span>{duration}</span>
         </AdditionalInfo>
-        <Description>{movie.description}</Description>
+        <Description>{description}</Description>
       </InfoContainer>
     </MovieDetailsContainer>
   );
