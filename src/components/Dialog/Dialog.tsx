@@ -10,7 +10,7 @@ import {
 export interface DialogProps {
   title: string;
   children: ReactNode;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export function Dialog({ title, children, onClose }: DialogProps) {

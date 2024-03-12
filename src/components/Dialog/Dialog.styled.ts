@@ -6,7 +6,8 @@ export const DialogContainer = styled.div`
   top: 25%;
   left: 25%;
   width: 50%;
-  height: 50%;
+  height: fit-content;
+  min-height: 100px;
   background-color: ${Colors.Workspace};
   opacity: 0.95;
   display: flex;
@@ -20,8 +21,9 @@ export const Header = styled.h2`
 `;
 
 export const Content = styled.div`
-  height: 100%;
-  width: 100%;
+  display: flex;
+  min-width: 200px;
+  min-height: 50px;
 `;
 
 export const CloseDialogButton = styled.button`
