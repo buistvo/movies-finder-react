@@ -1,4 +1,4 @@
-import { MovieDetailed } from '../../types/movie-detailed';
+import { Movie } from '../../types/movie';
 import {
   MovieDetailsContainer,
   ImageContainer,
@@ -11,12 +11,19 @@ import {
 } from './MovieDetails.styled';
 
 interface MovieDetailsProps {
-  movie: MovieDetailed;
+  movie: Movie;
 }
 
 export function MovieDetails({ movie }: MovieDetailsProps) {
-  const { name, imageUrl, rating, genreList, year, description, duration } =
-    movie;
+  const {
+    name,
+    imageUrl,
+    rating,
+    genreList,
+    releaseDate,
+    description,
+    duration,
+  } = movie;
   return (
     <MovieDetailsContainer>
       <ImageContainer>
@@ -28,7 +35,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         </InfoHeader>
         <Genre>{genreList.join(', ')}</Genre>
         <AdditionalInfo>
-          <span> {year}</span>
+          <span> {releaseDate?.getFullYear()}</span>
           <span>{duration}</span>
         </AdditionalInfo>
         <Description>{description}</Description>

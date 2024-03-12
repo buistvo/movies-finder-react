@@ -11,9 +11,9 @@ import {
   DetailsHeader,
   ConfirmButton,
   DeleteForm,
+  ButtonRed,
 } from './App.styled';
 import { MOVIE_MOCK } from './mocks/movie';
-import { MOVIE_DETAILED_MOCK } from './mocks/movie-detailed';
 import { GENRE_LIST_MOCK } from './mocks/genre-list';
 import { useState } from 'react';
 import { Dialog, DialogProps } from './components/Dialog/Dialog';
@@ -34,7 +34,15 @@ function App() {
   function handleMovieEdit(movie: Movie) {
     setDialogContent({
       title: 'EDIT MOVIE',
-      children: MovieForm(),
+      children: (
+        <MovieForm
+          movie={movie}
+          onSubmit={(mov) => {
+            console.log(mov);
+            setShowDialog(false);
+          }}
+        ></MovieForm>
+      ),
     });
     setShowDialog(true);
   }
@@ -58,11 +66,26 @@ function App() {
     console.log('delete', movie);
   }
 
+  function handleAddMovie() {
+    setDialogContent({
+      title: 'EDIT MOVIE',
+      children: (
+        <MovieForm
+          onSubmit={(mov) => {
+            console.log(mov);
+            setShowDialog(false);
+          }}
+        ></MovieForm>
+      ),
+    });
+    setShowDialog(true);
+  }
+
   return (
     <>
       <Counter initialCount={0}></Counter>
       <DetailsContainer>
-        <MovieDetails movie={MOVIE_DETAILED_MOCK}></MovieDetails>
+        <MovieDetails movie={MOVIE_MOCK}></MovieDetails>
       </DetailsContainer>
       <SearchForm onSearch={(query) => console.log(query)} />
       <MoviesContainer>
@@ -78,7 +101,7 @@ function App() {
             }
           ></SortControl>
         </DetailsHeader>
-
+        <ButtonRed onClick={handleAddMovie}> Add movie</ButtonRed>
         <MovieTile
           onEdit={handleMovieEdit}
           onDelete={handleMovieDeleteClick}
