@@ -10,10 +10,15 @@ import {
   Footer,
 } from './MovieForm.styled';
 import { ButtonRed } from '../../App.styled';
+import Select from 'react-select';
+import { Colors } from '../../Colors';
+import { CustomStyles } from '../../config/react-select.config';
 
+export type DropdownOption = { value: string; label: string };
 interface MovieFormProps {
   movie?: Movie;
   onSubmit: (movie: Movie) => void;
+  genreOptions: DropdownOption[];
 }
 
 interface LabeledInputProps {
@@ -39,7 +44,7 @@ const LabeledInputDescription = ({ label, children }: LabeledInputProps) => (
 );
 
 export function MovieForm(props: MovieFormProps) {
-  const { movie: initialMovie, onSubmit } = props;
+  const { movie: initialMovie, onSubmit, genreOptions } = props;
   const [movie, setMovie] = useState(initialMovie || new Movie());
 
   function handleReset() {
@@ -47,6 +52,7 @@ export function MovieForm(props: MovieFormProps) {
   }
 
   function handleValueChanges(value: unknown, prop: MoviePropsNames) {
+    console.log(value);
     setMovie({
       ...movie,
       [prop]: value,
@@ -97,13 +103,29 @@ export function MovieForm(props: MovieFormProps) {
         ></Input>
       </LabeledInput>
       <LabeledInput label={'GENRE'}>
-        <Input
-          onChange={(event) =>
-            handleValueChanges(event.target.value, 'genreList')
+        <Select
+          isMulti={true}
+          styles={CustomStyles}
+          options={genreOptions}
+          value={movie.genreList.map((g) => ({ label: g, value: g }))}
+          onChange={(newValue) =>
+            handleValueChanges(
+              newValue.map((v) => v.value),
+              'genreList'
+            )
           }
+        />
+        {/* <select
+          onChange={(event) =>
+            handleValueChanges([event.target.value], 'genreList')
+          }
+          multiple
           value={movie?.genreList}
-          placeholder={'Select Genre'}
-        ></Input>
+        >
+          {genreOptions?.map((genre) => (
+            <option key={genre}>{genre}</option>
+          ))}
+        </select> */}
       </LabeledInput>
       <LabeledInput label={'RUNTIME'}>
         <Input

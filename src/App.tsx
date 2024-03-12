@@ -14,7 +14,7 @@ import {
   ButtonRed,
 } from './App.styled';
 import { MOVIE_MOCK } from './mocks/movie';
-import { GENRE_LIST_MOCK } from './mocks/genre-list';
+import { GENRE_LIST_MOCK, GENRE_LIST_OPTIONS } from './mocks/genre-list';
 import { useState } from 'react';
 import { Dialog, DialogProps } from './components/Dialog/Dialog';
 import { Movie } from './types/movie';
@@ -36,6 +36,7 @@ function App() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
+          genreOptions={GENRE_LIST_OPTIONS}
           movie={movie}
           onSubmit={(mov) => {
             console.log(mov);
@@ -70,6 +71,7 @@ function App() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
+          genreOptions={GENRE_LIST_OPTIONS}
           onSubmit={(mov) => {
             console.log(mov);
             setShowDialog(false);
