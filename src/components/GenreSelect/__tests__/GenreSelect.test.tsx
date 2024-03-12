@@ -1,9 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { GenreSelect } from './GenreSelect';
+import { GenreSelect } from '../GenreSelect';
 import '@testing-library/jest-dom';
+import { GENRE_LIST_MOCK } from '../../../mocks/genre-list';
 
 describe('GenreSelect component', () => {
-  const genreList = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
+  const genreList = GENRE_LIST_MOCK;
 
   it('renders all genres passed in props', () => {
     render(<GenreSelect genreList={genreList} onSelect={() => {}} />);

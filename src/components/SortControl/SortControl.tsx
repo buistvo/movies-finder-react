@@ -16,8 +16,8 @@ export function SortControl({ sortList, onSortChange }: SortControlProps) {
         data-testid="sort-select"
         onChange={(e) => handleSortChange(e.target.value)}
       >
-        {sortList.map((sort, index) => (
-          <Option value={sort} key={index}>
+        {sortList.map((sort) => (
+          <Option value={sort} key={sort}>
             {sort.toUpperCase()}
           </Option>
         ))}
