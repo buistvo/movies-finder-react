@@ -48,15 +48,14 @@ function App() {
   }
 
   function handleMovieDeleteClick(movie: Movie) {
-    const DeleteDialog = () => (
-      <DeleteForm onSubmit={() => handleConfirmMovieDelete(movie)}>
-        <span>Are you sure you want to delete this movie?</span>
-        <ConfirmButton>CONFIRM</ConfirmButton>
-      </DeleteForm>
-    );
     setDialogContent({
       title: 'DELETE MOVIE',
-      children: DeleteDialog(),
+      children: (
+        <DeleteForm onSubmit={() => handleConfirmMovieDelete(movie)}>
+          <span>Are you sure you want to delete this movie?</span>
+          <ConfirmButton>CONFIRM</ConfirmButton>
+        </DeleteForm>
+      ),
     });
     setShowDialog(true);
   }
@@ -83,6 +82,7 @@ function App() {
 
   return (
     <>
+      <ButtonRed onClick={handleAddMovie}> Add movie</ButtonRed>
       <Counter initialCount={0}></Counter>
       <DetailsContainer>
         <MovieDetails movie={MOVIE_MOCK}></MovieDetails>
@@ -101,7 +101,6 @@ function App() {
             }
           ></SortControl>
         </DetailsHeader>
-        <ButtonRed onClick={handleAddMovie}> Add movie</ButtonRed>
         <MovieTile
           onEdit={handleMovieEdit}
           onDelete={handleMovieDeleteClick}
