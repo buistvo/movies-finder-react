@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchForm.css';
+import { ButtonRed } from '../../App.styled';
 
 interface InitialProps {
   initialValue?: string;
@@ -27,9 +28,9 @@ export function SearchForm({ initialValue, onSearch }: InitialProps) {
         onChange={handleInputChange}
         placeholder="What do you want to search?"
       />
-      <button type="submit" className="search-button">
+      <ButtonRed type="submit" className="search-button">
         SEARCH
-      </button>
+      </ButtonRed>
     </form>
   );
 }

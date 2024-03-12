@@ -37,6 +37,7 @@
     "@types/jest": "^29.5.12",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
+    "@types/react-portal": "^4.0.7",
     "@types/testing-library__jest-dom": "^6.0.0",
     "@types/testing-library__user-event": "^4.2.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
