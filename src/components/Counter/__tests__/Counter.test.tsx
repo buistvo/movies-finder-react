@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { Counter } from './Counter';
+import { Counter } from '../Counter';
 
 describe('Counter', () => {
   const initialCount = 10;

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SearchForm } from './SearchForm';
+import { SearchForm } from '../SearchForm';
 
 describe('SearchForm component', () => {
   const placeHolderText = 'What do you want to search?';
