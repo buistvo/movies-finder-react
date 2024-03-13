@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../Colors';
+import { ButtonRed } from '../../App.styled';
 
 export const DialogContainer = styled.div`
   position: fixed;
@@ -35,4 +36,14 @@ export const CloseDialogButton = styled.button`
   justify-self: end;
   width: 30px;
   height: 30px;
+`;
+
+export const DialogContent = styled.div`
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+`;
+
+export const ConfirmButton = styled(ButtonRed)`
+  align-self: end;
 `;

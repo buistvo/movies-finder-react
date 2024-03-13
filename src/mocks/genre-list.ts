@@ -8,7 +8,7 @@ export const GENRE_LIST_MOCK = [
   'CRIME',
 ];
 
-export const GENRE_LIST_OPTIONS: DropdownOption[] = [
+export const GENRE_LIST_OPTIONS_MOCK: DropdownOption[] = [
   { label: 'DOCUMENTARY', value: 'DOCUMENTARY' },
   { label: 'COMEDY', value: 'COMEDY' },
   { label: 'HORROR', value: 'HORROR' },

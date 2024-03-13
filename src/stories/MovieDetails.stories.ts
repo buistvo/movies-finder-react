@@ -1,6 +1,6 @@
 import { MovieDetails } from '../components/MovieDetails/MovieDetails';
 import type { Meta, StoryObj } from '@storybook/react';
-import { MOVIE_DETAILED_MOCK } from '../mocks/movie-detailed';
+import { MOVIE_MOCK } from '../mocks/movie';
 
 const meta = {
   title: 'MovieDetails',
@@ -16,6 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const InitialState: Story = {
   args: {
-    movie: MOVIE_DETAILED_MOCK,
+    movie: MOVIE_MOCK,
   },
 };

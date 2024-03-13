@@ -36,13 +36,3 @@ export const DetailsHeader = styled.div`
     background-color: grey;
   }
 `;
-
-export const DeleteForm = styled.form`
-  width: 100%;
-  flex-direction: column;
-  display: flex;
-`;
-
-export const ConfirmButton = styled(ButtonRed)`
-  align-self: end;
-`;

@@ -12,9 +12,10 @@ import {
   ConfirmButton,
   DeleteForm,
   ButtonRed,
+  DialogContent,
 } from './App.styled';
 import { MOVIE_MOCK } from './mocks/movie';
-import { GENRE_LIST_MOCK, GENRE_LIST_OPTIONS } from './mocks/genre-list';
+import { GENRE_LIST_MOCK, GENRE_LIST_OPTIONS_MOCK } from './mocks/genre-list';
 import { useState } from 'react';
 import { Dialog, DialogProps } from './components/Dialog/Dialog';
 import { Movie } from './types/movie';
@@ -36,7 +37,7 @@ function App() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
-          genreOptions={GENRE_LIST_OPTIONS}
+          genreOptions={GENRE_LIST_OPTIONS_MOCK}
           movie={movie}
           onSubmit={(mov) => {
             console.log(mov);
@@ -51,12 +52,8 @@ function App() {
   function handleMovieDeleteClick(movie: Movie) {
     setDialogContent({
       title: 'DELETE MOVIE',
-      children: (
-        <DeleteForm onSubmit={() => handleConfirmMovieDelete(movie)}>
-          <span>Are you sure you want to delete this movie?</span>
-          <ConfirmButton>CONFIRM</ConfirmButton>
-        </DeleteForm>
-      ),
+      children: 'Are you sure you want to delete this movie?',
+      onConfirm: () => handleConfirmMovieDelete(movie),
     });
     setShowDialog(true);
   }
@@ -71,7 +68,7 @@ function App() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
-          genreOptions={GENRE_LIST_OPTIONS}
+          genreOptions={GENRE_LIST_OPTIONS_MOCK}
           onSubmit={(mov) => {
             console.log(mov);
             setShowDialog(false);
@@ -110,7 +107,11 @@ function App() {
         ></MovieTile>
       </MoviesContainer>
       {showDialog && (
-        <Dialog title={dialogContent.title} onClose={() => toggleDialog(false)}>
+        <Dialog
+          title={dialogContent.title}
+          onConfirm={dialogContent.onConfirm}
+          onClose={() => toggleDialog(false)}
+        >
           {dialogContent.children}
         </Dialog>
       )}
