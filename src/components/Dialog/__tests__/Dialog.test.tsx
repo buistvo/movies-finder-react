@@ -10,6 +10,11 @@ const testProps: DialogProps = {
 };
 
 describe('Dialog component', () => {
+  const onConfirmMock = jest.fn();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   it('renders with correct title and content', () => {
     const { getByText } = render(<Dialog {...testProps} />);
 
@@ -24,5 +29,16 @@ describe('Dialog component', () => {
     fireEvent.click(closeButton);
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onConfirm when confirm button is clicked', () => {
+    const { getByText } = render(
+      <Dialog title="Test Dialog" onConfirm={onConfirmMock}>
+        Test content
+      </Dialog>
+    );
+
+    fireEvent.click(getByText('CONFIRM'));
+    expect(onConfirmMock).toHaveBeenCalled();
   });
 });

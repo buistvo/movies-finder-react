@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MovieDetails } from '../MovieDetails';
-import { MOVIE_DETAILED_MOCK } from '../../../mocks/movie-detailed';
+import { MOVIE_MOCK } from '../../../mocks/movie';
 
-const mockMovie = MOVIE_DETAILED_MOCK;
+const mockMovie = MOVIE_MOCK;
 
 describe('MovieDetails component', () => {
   it('renders movie details correctly', () => {
@@ -12,9 +12,9 @@ describe('MovieDetails component', () => {
     );
 
     expect(getByText(mockMovie.name)).toBeInTheDocument();
-    expect(getByText(mockMovie.rating)).toBeInTheDocument();
+    expect(getByText(mockMovie.rating!.toString())).toBeInTheDocument();
     expect(getByText(mockMovie.genreList.join(', '))).toBeInTheDocument();
-    expect(getByText(mockMovie.year)).toBeInTheDocument();
+    expect(getByText(mockMovie.releaseDate.getFullYear())).toBeInTheDocument();
     expect(getByText(mockMovie.duration)).toBeInTheDocument();
     expect(getByText(mockMovie.description)).toBeInTheDocument();
 

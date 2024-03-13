@@ -10,7 +10,7 @@ import {
   DialogContent,
 } from './Dialog.styled';
 export interface DialogProps {
-  title: string;
+  title: ReactNode | string;
   children?: ReactNode | string;
   onClose?: () => void;
   onConfirm?: () => void;
