@@ -10,10 +10,10 @@ export const DialogContainer = styled.div`
   height: fit-content;
   min-height: 100px;
   background-color: ${Colors.Workspace};
-  opacity: 0.95;
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  box-shadow: 0px 0px 5px 5px ${Colors.HoverRed};
 `;
 
 export const Header = styled.h2`
