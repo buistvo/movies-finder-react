@@ -8,10 +8,9 @@ import {
   Input,
   DescriptionInput,
   Footer,
+  MovieFormButton,
 } from './MovieForm.styled';
-import { ButtonRed } from '../../App.styled';
 import Select from 'react-select';
-import { Colors } from '../../Colors';
 import { CustomStyles } from '../../config/react-select.config';
 
 export type DropdownOption = { value: string; label: string };
@@ -52,7 +51,6 @@ export function MovieForm(props: MovieFormProps) {
   }
 
   function handleValueChanges(value: unknown, prop: MoviePropsNames) {
-    console.log(value);
     setMovie({
       ...movie,
       [prop]: value,
@@ -146,10 +144,10 @@ export function MovieForm(props: MovieFormProps) {
         ></DescriptionInput>
       </LabeledInputDescription>
       <Footer>
-        <ButtonRed type={'button'} onClick={handleReset}>
+        <MovieFormButton type={'button'} onClick={handleReset}>
           RESET
-        </ButtonRed>
-        <ButtonRed>SUBMIT</ButtonRed>
+        </MovieFormButton>
+        <MovieFormButton>SUBMIT</MovieFormButton>
       </Footer>
     </FormContainer>
   );

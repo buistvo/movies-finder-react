@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../Colors';
-import Select from 'react-select';
+import { ButtonRed } from '../../App.styled';
 
 export const FormContainer = styled.form`
   display: grid;
@@ -44,5 +44,9 @@ export const DescriptionInput = styled.textarea`
 export const Footer = styled.div`
   display: flex;
   grid-column-start: 2;
-  justify-content: space-between;
+  justify-self: end;
+`;
+
+export const MovieFormButton = styled(ButtonRed)`
+  margin-left: 1rem;
 `;
