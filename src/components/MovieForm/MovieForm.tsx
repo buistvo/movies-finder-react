@@ -113,17 +113,6 @@ export function MovieForm(props: MovieFormProps) {
             )
           }
         />
-        {/* <select
-          onChange={(event) =>
-            handleValueChanges([event.target.value], 'genreList')
-          }
-          multiple
-          value={movie?.genreList}
-        >
-          {genreOptions?.map((genre) => (
-            <option key={genre}>{genre}</option>
-          ))}
-        </select> */}
       </LabeledInput>
       <LabeledInput label={'RUNTIME'}>
         <Input
