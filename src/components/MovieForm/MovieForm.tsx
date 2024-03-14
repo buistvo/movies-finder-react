@@ -45,6 +45,15 @@ const LabeledInputDescription = ({ label, children }: LabeledInputProps) => (
 export function MovieForm(props: MovieFormProps) {
   const { movie: initialMovie, onSubmit, genreOptions } = props;
   const [movie, setMovie] = useState(initialMovie || new Movie());
+  const {
+    name,
+    description,
+    imageUrl,
+    rating,
+    genreList,
+    releaseDate,
+    duration,
+  } = movie;
 
   function handleReset() {
     setMovie(initialMovie || new Movie());
@@ -69,7 +78,7 @@ export function MovieForm(props: MovieFormProps) {
       <LabeledInput label={'TITLE'}>
         <Input
           onChange={(event) => handleValueChanges(event.target.value, 'name')}
-          value={movie?.name}
+          value={name}
           placeholder={'Enter title'}
         ></Input>
       </LabeledInput>
@@ -79,7 +88,7 @@ export function MovieForm(props: MovieFormProps) {
           onChange={(event) =>
             handleValueChanges(new Date(event.target.value), 'releaseDate')
           }
-          value={movie?.releaseDate.toISOString().slice(0, 10)}
+          value={releaseDate.toISOString().slice(0, 10)}
           placeholder={'Select Date'}
         ></Input>
       </LabeledInput>
@@ -88,7 +97,7 @@ export function MovieForm(props: MovieFormProps) {
           onChange={(event) =>
             handleValueChanges(event.target.value, 'imageUrl')
           }
-          value={movie?.imageUrl}
+          value={imageUrl}
           placeholder={'https://'}
         ></Input>
       </LabeledInput>
@@ -96,7 +105,7 @@ export function MovieForm(props: MovieFormProps) {
         <Input
           type="number"
           onChange={(event) => handleValueChanges(event.target.value, 'rating')}
-          value={movie?.rating || 0}
+          value={rating || 0}
           placeholder={'7.8'}
         ></Input>
       </LabeledInput>
@@ -105,7 +114,7 @@ export function MovieForm(props: MovieFormProps) {
           isMulti={true}
           styles={CustomStyles}
           options={genreOptions}
-          value={movie.genreList.map((g) => ({ label: g, value: g }))}
+          value={genreList.map((g) => ({ label: g, value: g }))}
           onChange={(newValue) =>
             handleValueChanges(
               newValue.map((v) => v.value),
@@ -119,7 +128,7 @@ export function MovieForm(props: MovieFormProps) {
           onChange={(event) =>
             handleValueChanges(event.target.value, 'duration')
           }
-          value={movie?.duration}
+          value={duration}
           placeholder={'minutes'}
         ></Input>
       </LabeledInput>
@@ -128,7 +137,7 @@ export function MovieForm(props: MovieFormProps) {
           onChange={(event) =>
             handleValueChanges(event.target.value, 'description')
           }
-          value={movie?.description}
+          value={description}
           placeholder={'Movie description'}
         ></DescriptionInput>
       </LabeledInputDescription>
