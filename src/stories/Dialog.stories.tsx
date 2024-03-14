@@ -2,9 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Dialog } from '../components/Dialog/Dialog';
 import { MovieForm } from '../components/MovieForm/MovieForm';
 import { Movie } from '../types/movie';
-import { GENRE_LIST_OPTIONS_MOCK } from '../mocks/genre-list';
 import { MOVIE_MOCK } from '../mocks/movie';
-import { ConfirmButton, DeleteForm } from '../App.styled';
+import {
+  DialogContent,
+  ConfirmButton,
+} from '../components/Dialog/Dialog.styled';
 
 const meta = {
   title: 'Dialog',
@@ -29,10 +31,9 @@ export const AddMovie: Story = {
     title: 'ADD MOVIE',
     children: (
       <MovieForm
-        onSubmit={function (movie: Movie): void {
+        onSubmit={function (_: Movie): void {
           console.log('add');
         }}
-        genreOptions={GENRE_LIST_OPTIONS_MOCK}
       ></MovieForm>
     ),
   },
@@ -44,10 +45,9 @@ export const EditMovie: Story = {
     children: (
       <MovieForm
         movie={MOVIE_MOCK}
-        onSubmit={function (movie: Movie): void {
+        onSubmit={function (_: Movie): void {
           console.log('add');
         }}
-        genreOptions={GENRE_LIST_OPTIONS_MOCK}
       ></MovieForm>
     ),
   },
@@ -56,7 +56,11 @@ export const EditMovie: Story = {
 export const DeleteMovie: Story = {
   args: {
     title: 'DELETE MOVIE',
-    children: 'Are you sure you want to delete this movie',
-    onConfirm: () => console.log('delete'),
+    children: (
+      <DialogContent>
+        <span>Are you sure you want to delete this movie?</span>
+        <ConfirmButton>CONFIRM</ConfirmButton>
+      </DialogContent>
+    ),
   },
 };

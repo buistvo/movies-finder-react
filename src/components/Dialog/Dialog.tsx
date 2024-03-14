@@ -6,17 +6,15 @@ import {
   CloseDialogButton,
   Header,
   Content,
-  ConfirmButton,
-  DialogContent,
 } from './Dialog.styled';
+
 export interface DialogProps {
-  title: ReactNode | string;
-  children?: ReactNode | string;
+  title: ReactNode;
+  children?: ReactNode;
   onClose?: () => void;
-  onConfirm?: () => void;
 }
 
-export function Dialog({ title, children, onClose, onConfirm }: DialogProps) {
+export function Dialog({ title, children, onClose }: DialogProps) {
   return (
     <Portal>
       <FocusTrap>
@@ -25,18 +23,7 @@ export function Dialog({ title, children, onClose, onConfirm }: DialogProps) {
             {'\u2715'}
           </CloseDialogButton>
           <Header> {title} </Header>
-          <Content>
-            {typeof children === 'string' ? (
-              <DialogContent>
-                <span>{children}</span>
-                <ConfirmButton onClick={() => onConfirm && onConfirm()}>
-                  CONFIRM
-                </ConfirmButton>
-              </DialogContent>
-            ) : (
-              children
-            )}
-          </Content>
+          <Content>{children}</Content>
         </DialogContainer>
       </FocusTrap>
     </Portal>

@@ -9,17 +9,18 @@ import {
   DetailsContainer,
   MoviesContainer,
   DetailsHeader,
-  ConfirmButton,
-  DeleteForm,
   ButtonRed,
-  DialogContent,
 } from './App.styled';
 import { MOVIE_MOCK } from './mocks/movie';
-import { GENRE_LIST_MOCK, GENRE_LIST_OPTIONS_MOCK } from './mocks/genre-list';
+import { GENRE_LIST_MOCK } from './mocks/genre-list';
 import { useState } from 'react';
 import { Dialog, DialogProps } from './components/Dialog/Dialog';
 import { Movie } from './types/movie';
 import { MovieForm } from './components/MovieForm/MovieForm';
+import {
+  DialogContent,
+  ConfirmButton,
+} from './components/Dialog/Dialog.styled';
 
 function App() {
   const [showDialog, setShowDialog] = useState(false);
@@ -37,7 +38,6 @@ function App() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
-          genreOptions={GENRE_LIST_OPTIONS_MOCK}
           movie={movie}
           onSubmit={(mov) => {
             console.log(mov);
@@ -52,8 +52,14 @@ function App() {
   function handleMovieDeleteClick(movie: Movie) {
     setDialogContent({
       title: 'DELETE MOVIE',
-      children: 'Are you sure you want to delete this movie?',
-      onConfirm: () => handleConfirmMovieDelete(movie),
+      children: (
+        <DialogContent>
+          <span>Are you sure you want to delete this movie?</span>
+          <ConfirmButton onClick={() => handleConfirmMovieDelete(movie)}>
+            CONFIRM
+          </ConfirmButton>
+        </DialogContent>
+      ),
     });
     setShowDialog(true);
   }
@@ -68,7 +74,6 @@ function App() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
-          genreOptions={GENRE_LIST_OPTIONS_MOCK}
           onSubmit={(mov) => {
             console.log(mov);
             setShowDialog(false);
@@ -107,11 +112,7 @@ function App() {
         ></MovieTile>
       </MoviesContainer>
       {showDialog && (
-        <Dialog
-          title={dialogContent.title}
-          onConfirm={dialogContent.onConfirm}
-          onClose={() => toggleDialog(false)}
-        >
+        <Dialog title={dialogContent.title} onClose={() => toggleDialog(false)}>
           {dialogContent.children}
         </Dialog>
       )}

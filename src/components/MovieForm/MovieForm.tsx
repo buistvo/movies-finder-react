@@ -12,12 +12,12 @@ import {
 } from './MovieForm.styled';
 import Select from 'react-select';
 import { CustomStyles } from '../../config/react-select.config';
+import { GENRE_LIST_OPTIONS } from '../../constants/genre-list-options';
 
 export type DropdownOption = { value: string; label: string };
 interface MovieFormProps {
   movie?: Movie;
   onSubmit: (movie: Movie) => void;
-  genreOptions: DropdownOption[];
 }
 
 interface LabeledInputProps {
@@ -41,7 +41,7 @@ const LabeledInputDescription = ({ label, children }: LabeledInputProps) => (
 );
 
 export function MovieForm(props: MovieFormProps) {
-  const { movie: initialMovie, onSubmit, genreOptions } = props;
+  const { movie: initialMovie, onSubmit } = props;
   const [movie, setMovie] = useState(initialMovie || new Movie());
   const {
     name,
@@ -72,11 +72,7 @@ export function MovieForm(props: MovieFormProps) {
   return (
     <FormContainer onSubmit={handleSubmit}>
       <LabeledInput label={'TITLE'}>
-        <Input
-          name="name"
-          defaultValue={name}
-          placeholder={'Enter title'}
-        ></Input>
+        <Input name="name" defaultValue={name} placeholder={'Enter title'} />
       </LabeledInput>
       <LabeledInput label={'RELEASE DATE'}>
         <Input
@@ -84,14 +80,14 @@ export function MovieForm(props: MovieFormProps) {
           name="releaseDate"
           defaultValue={releaseDate.toISOString().slice(0, 10)}
           placeholder={'Select Date'}
-        ></Input>
+        />
       </LabeledInput>
       <LabeledInput label={'MOVIE URL'}>
         <Input
           name="imageUrl"
           defaultValue={imageUrl}
           placeholder={'https://'}
-        ></Input>
+        />
       </LabeledInput>
       <LabeledInput label={'RATING'}>
         <Input
@@ -99,14 +95,14 @@ export function MovieForm(props: MovieFormProps) {
           type="number"
           defaultValue={rating || 0}
           placeholder={'7.8'}
-        ></Input>
+        />
       </LabeledInput>
       <LabeledInput label={'GENRE'}>
         <Select
           name="genreList"
           isMulti={true}
           styles={CustomStyles}
-          options={genreOptions}
+          options={GENRE_LIST_OPTIONS}
           defaultValue={genreList.map((g) => ({ label: g, value: g }))}
         />
       </LabeledInput>
@@ -115,7 +111,7 @@ export function MovieForm(props: MovieFormProps) {
           name="duration"
           defaultValue={duration}
           placeholder={'minutes'}
-        ></Input>
+        />
       </LabeledInput>
       <LabeledInputDescription fullRow={true} label={'OVERVIEW'}>
         <DescriptionInput
@@ -125,10 +121,10 @@ export function MovieForm(props: MovieFormProps) {
         ></DescriptionInput>
       </LabeledInputDescription>
       <Footer>
-        <MovieFormButton type={'button'} onClick={handleReset}>
+        <MovieFormButton type="button" onClick={handleReset}>
           RESET
         </MovieFormButton>
-        <MovieFormButton>SUBMIT</MovieFormButton>
+        <MovieFormButton type="submit">SUBMIT</MovieFormButton>
       </Footer>
     </FormContainer>
   );

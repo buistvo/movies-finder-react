@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MovieForm } from '../components/MovieForm/MovieForm';
-import { GENRE_LIST_OPTIONS_MOCK } from '../mocks/genre-list';
 
 const meta = {
   title: 'MovieForm',
@@ -16,9 +15,8 @@ type Story = StoryObj<typeof meta>;
 
 export const InitialState: Story = {
   args: {
-    onSubmit(movie) {
+    onSubmit(_) {
       console.log('submit');
     },
-    genreOptions: GENRE_LIST_OPTIONS_MOCK,
   },
 };
