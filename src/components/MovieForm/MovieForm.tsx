@@ -26,8 +26,6 @@ interface LabeledInputProps {
   fullRow?: boolean;
 }
 
-type MoviePropsNames = Extract<keyof Movie, string>;
-
 const LabeledInput = ({ label, children }: LabeledInputProps) => (
   <LabeledInputContainer>
     <Label>{label}</Label>
