@@ -118,7 +118,7 @@ export function MovieForm(props: MovieFormProps) {
           name="description"
           defaultValue={description}
           placeholder={'Movie description'}
-        ></DescriptionInput>
+        />
       </LabeledInputDescription>
       <Footer>
         <MovieFormButton type="button" onClick={handleReset}>
