@@ -59,85 +59,70 @@ export function MovieForm(props: MovieFormProps) {
     setMovie(initialMovie || new Movie());
   }
 
-  function handleValueChanges(value: unknown, prop: MoviePropsNames) {
-    setMovie({
-      ...movie,
-      [prop]: value,
-    });
-  }
-
   function handleSubmit(event: SyntheticEvent) {
-    //const result = Object.fromEntries(new FormData(event.target));
-    //console.log(result);
+    const fd = new FormData(event.target as HTMLFormElement);
+    const obj = Object.fromEntries(
+      Array.from(fd.keys(), (key) => {
+        const val = fd.getAll(key);
+        return [key, val.length > 1 ? val : val.pop()];
+      })
+    ) as unknown as Movie;
     event.preventDefault();
-    onSubmit(movie);
+    onSubmit(obj);
   }
 
   return (
     <FormContainer onSubmit={handleSubmit}>
       <LabeledInput label={'TITLE'}>
         <Input
-          onChange={(event) => handleValueChanges(event.target.value, 'name')}
-          value={name}
+          name="name"
+          defaultValue={name}
           placeholder={'Enter title'}
         ></Input>
       </LabeledInput>
       <LabeledInput label={'RELEASE DATE'}>
         <Input
           type="date"
-          onChange={(event) =>
-            handleValueChanges(new Date(event.target.value), 'releaseDate')
-          }
-          value={releaseDate.toISOString().slice(0, 10)}
+          name="releaseDate"
+          defaultValue={releaseDate.toISOString().slice(0, 10)}
           placeholder={'Select Date'}
         ></Input>
       </LabeledInput>
       <LabeledInput label={'MOVIE URL'}>
         <Input
-          onChange={(event) =>
-            handleValueChanges(event.target.value, 'imageUrl')
-          }
-          value={imageUrl}
+          name="imageUrl"
+          defaultValue={imageUrl}
           placeholder={'https://'}
         ></Input>
       </LabeledInput>
       <LabeledInput label={'RATING'}>
         <Input
+          name="rating"
           type="number"
-          onChange={(event) => handleValueChanges(event.target.value, 'rating')}
-          value={rating || 0}
+          defaultValue={rating || 0}
           placeholder={'7.8'}
         ></Input>
       </LabeledInput>
       <LabeledInput label={'GENRE'}>
         <Select
+          name="genreList"
           isMulti={true}
           styles={CustomStyles}
           options={genreOptions}
-          value={genreList.map((g) => ({ label: g, value: g }))}
-          onChange={(newValue) =>
-            handleValueChanges(
-              newValue.map((v) => v.value),
-              'genreList'
-            )
-          }
+          defaultValue={genreList.map((g) => ({ label: g, value: g }))}
         />
       </LabeledInput>
       <LabeledInput label={'RUNTIME'}>
         <Input
-          onChange={(event) =>
-            handleValueChanges(event.target.value, 'duration')
-          }
-          value={duration}
+          name="duration"
+          defaultValue={duration}
           placeholder={'minutes'}
         ></Input>
       </LabeledInput>
       <LabeledInputDescription fullRow={true} label={'OVERVIEW'}>
         <DescriptionInput
-          onChange={(event) =>
-            handleValueChanges(event.target.value, 'description')
-          }
-          value={description}
+          name="description"
+          defaultValue={description}
           placeholder={'Movie description'}
         ></DescriptionInput>
       </LabeledInputDescription>
