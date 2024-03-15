@@ -12,7 +12,6 @@ import {
   ButtonRed,
 } from './App.styled';
 import { MOVIE_MOCK } from './mocks/movie';
-import { GENRE_LIST_MOCK } from './mocks/genre-list';
 import { useState } from 'react';
 import { Dialog, DialogProps } from './components/Dialog/Dialog';
 import { Movie } from './types/movie';
@@ -21,6 +20,7 @@ import {
   DialogContent,
   ConfirmButton,
 } from './components/Dialog/Dialog.styled';
+import { GENRE_LIST } from './constants/genre-list-options';
 
 function App() {
   const [showDialog, setShowDialog] = useState(false);
@@ -95,7 +95,7 @@ function App() {
       <MoviesContainer>
         <DetailsHeader>
           <GenreSelect
-            genreList={GENRE_LIST_MOCK}
+            genreList={GENRE_LIST}
             onSelect={(genre) => console.log(genre)}
           />
           <SortControl
