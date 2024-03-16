@@ -11,7 +11,7 @@ describe('MovieTile component', () => {
     const { getByText, getByAltText } = render(<MovieTile movie={mockMovie} />);
 
     expect(getByText(mockMovie.name)).toBeInTheDocument();
-    expect(getByText(mockMovie.year)).toBeInTheDocument();
+    expect(getByText(mockMovie.releaseDate.getFullYear())).toBeInTheDocument();
     expect(getByText(mockMovie.genreList.join(','))).toBeInTheDocument(); // Note: There is no space after the comma in the join() method
     expect(getByAltText(mockMovie.name)).toHaveAttribute(
       'src',

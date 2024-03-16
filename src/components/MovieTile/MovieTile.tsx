@@ -73,7 +73,7 @@ export function MovieTile({
       <img alt={movie.name} onClick={handleMovieClick} src={movie.imageUrl} />
       <MovieInfo>
         <Title> {movie.name} </Title>
-        <Year> {movie.year} </Year>
+        <Year> {movie.releaseDate.getFullYear()} </Year>
       </MovieInfo>
       <GenreList> {movie.genreList.join(',')} </GenreList>
     </Container>

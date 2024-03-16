@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GenreSelect } from '../components/GenreSelect/GenreSelect';
-import { GENRE_LIST_MOCK } from '../mocks/genre-list';
+import { GENRE_LIST } from '../constants/genre-list-options';
 
 const meta = {
   title: 'GenreSelect',
@@ -16,13 +16,13 @@ type Story = StoryObj<typeof meta>;
 
 export const NoInitialValue: Story = {
   args: {
-    genreList: GENRE_LIST_MOCK,
+    genreList: GENRE_LIST,
   },
 };
 
 export const WithInitialValue: Story = {
   args: {
-    genreList: GENRE_LIST_MOCK,
+    genreList: GENRE_LIST,
     initialSelectedGenre: 'COMEDY',
   },
 };
