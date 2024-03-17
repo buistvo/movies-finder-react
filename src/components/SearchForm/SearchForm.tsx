@@ -40,7 +40,7 @@ export function SearchForm({ initialValue, onSearch }: InitialProps) {
           className="input"
           value={value}
           onChange={handleInputChange}
-          placeholder="What do you want to search?"
+          placeholder="What do you want to watch?"
         />
         <ButtonRed type="submit" className="search-button">
           SEARCH
