@@ -10,3 +10,8 @@ export const ButtonRed = styled.button`
     background-color: ${Colors.HoverRed};
   }
 `;
+
+export const MovieImage = styled.img`
+  width: 250px;
+  height: 350px;
+`;

@@ -1,7 +1,7 @@
+import { MovieImage } from '../../App.styled';
 import { Movie } from '../../types/movie';
 import {
   MovieDetailsContainer,
-  ImageContainer,
   InfoContainer,
   InfoHeader,
   Rating,
@@ -26,9 +26,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
   } = movie;
   return (
     <MovieDetailsContainer>
-      <ImageContainer>
-        <img alt={name} src={imageUrl} />
-      </ImageContainer>
+      <MovieImage alt={name} src={imageUrl} />
       <InfoContainer>
         <InfoHeader>
           {name} <Rating>{rating}</Rating>

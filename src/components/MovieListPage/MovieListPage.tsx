@@ -15,6 +15,7 @@ import {
   SearchMovieContainer,
   SearchMovieContent,
   TopContainerHeader,
+  TopContainer,
 } from './MovieListPage.styled';
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
@@ -22,7 +23,9 @@ import { DialogContent, ConfirmButton } from '../Dialog/Dialog.styled';
 import { MovieDetails } from '../MovieDetails/MovieDetails';
 import { MovieForm } from '../MovieForm/MovieForm';
 import { SearchForm } from '../SearchForm/SearchForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
 
 const AppLogo = () => (
   <Logo>
@@ -31,12 +34,39 @@ const AppLogo = () => (
   </Logo>
 );
 
+const MoviesGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export function MovieListPage() {
   const [showDialog, setShowDialog] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [genre, setGenre] = useState('');
+  const [sort, setSort] = useState('');
+  const [sortList, setSortList] = useState(['Release Date', 'Title']);
+  const [movieList, setMovieList] = useState([
+    MOVIE_MOCK,
+    MOVIE_MOCK,
+    MOVIE_MOCK,
+    MOVIE_MOCK,
+    MOVIE_MOCK,
+    MOVIE_MOCK,
+  ]);
+  const [selectedMovie, setSelectedMovie] = useState<Movie>();
+
   const [dialogContent, setDialogContent] = useState<DialogProps>({
     children: null,
     title: '',
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get('http://localhost:4000/movies');
+      console.log(result);
+    };
+    fetchData();
+  }, [searchTerm, genre, sort]);
 
   function toggleDialog(isOpen: boolean) {
     setShowDialog(isOpen);
@@ -94,44 +124,60 @@ export function MovieListPage() {
   }
   return (
     <MovieListPageContainer>
-      <DetailsContainer>
-        <TopContainerHeader>
-          <AppLogo />
-          <AddMovieButton onClick={handleAddMovie}>SEARCH</AddMovieButton>
-        </TopContainerHeader>
-        <MovieDetails movie={MOVIE_MOCK}></MovieDetails>
-      </DetailsContainer>
-
-      {/* <SearchMovieContainer>
-        <TopContainerHeader>
-          <AppLogo />
-          <AddMovieButton onClick={handleAddMovie}>+ ADD MOVIE</AddMovieButton>
-        </TopContainerHeader>
-        <SearchMovieContent>
-          <SearchForm onSearch={(query) => console.log(query)} />
-        </SearchMovieContent>
-      </SearchMovieContainer> */}
+      <TopContainer>
+        {selectedMovie ? (
+          <DetailsContainer>
+            <TopContainerHeader>
+              <AppLogo />
+              <AddMovieButton onClick={() => setSelectedMovie(undefined)}>
+                SEARCH
+              </AddMovieButton>
+            </TopContainerHeader>
+            <MovieDetails movie={selectedMovie}></MovieDetails>
+          </DetailsContainer>
+        ) : (
+          <SearchMovieContainer>
+            <TopContainerHeader>
+              <AppLogo />
+              <AddMovieButton onClick={handleAddMovie}>
+                + ADD MOVIE
+              </AddMovieButton>
+            </TopContainerHeader>
+            <SearchMovieContent>
+              <SearchForm
+                initialValue={searchTerm}
+                onSearch={(query) => setSearchTerm(query)}
+              />
+            </SearchMovieContent>
+          </SearchMovieContainer>
+        )}
+      </TopContainer>
 
       <MoviesContainer>
         <DetailsHeader>
           <GenreSelect
             genreList={GENRE_LIST}
-            onSelect={(genre) => console.log(genre)}
+            onSelect={(genre) => setGenre(genre)}
           />
           <SortControl
-            sortList={['Release Date', 'Title']}
-            onSortChange={(sortOption) =>
-              console.log('onSortChange', sortOption)
-            }
+            sortList={sortList}
+            onSortChange={(sortOption) => setSort(sortOption)}
           ></SortControl>
         </DetailsHeader>
         <MoviesTotal>39 MOVIES FOUND</MoviesTotal>
-        <MovieTile
-          onEdit={handleMovieEdit}
-          onDelete={handleMovieDeleteClick}
-          movie={MOVIE_MOCK}
-        ></MovieTile>
+        <MoviesGrid>
+          {movieList.map((movie, index) => (
+            <MovieTile
+              key={movie.name + index}
+              onEdit={handleMovieEdit}
+              onDelete={handleMovieDeleteClick}
+              onClick={(movie) => setSelectedMovie(movie)}
+              movie={movie}
+            ></MovieTile>
+          ))}
+        </MoviesGrid>
       </MoviesContainer>
+
       <MovieListPageFooter>
         <AppLogo />
       </MovieListPageFooter>

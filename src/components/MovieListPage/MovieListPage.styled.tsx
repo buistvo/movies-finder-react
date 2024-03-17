@@ -32,14 +32,12 @@ export const DetailsHeader = styled.div`
 export const MovieListPageContainer = styled.div``;
 export const SearchMovieContainer = styled.div`
   position: relative;
-  min-height: 400px;
   background: no-repeat center center;
   background-image: url('images/literally-me.jpg');
   background-repeat: repeat;
   background-position: top;
   background-repeat: repeat;
   background-size: cover;
-  min-height: 400px;
   padding: 1rem;
   margin-bottom: 1rem;
   &::after {
@@ -87,8 +85,8 @@ export const AddMovieButton = styled.button`
 `;
 
 export const MoviesTotal = styled.div`
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 2rem;
+  padding-left: 2rem;
   text-align: start;
 `;
 
@@ -97,4 +95,9 @@ export const MovieListPageFooter = styled.div`
   padding-bottom: 1rem;
 
   background-color: ${Colors.Workspace}80;
+`;
+
+export const TopContainer = styled.div`
+  display: grid;
+  min-height: 460px;
 `;
