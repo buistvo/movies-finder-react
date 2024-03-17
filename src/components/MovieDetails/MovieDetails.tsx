@@ -1,4 +1,5 @@
 import { MovieImage } from '../../App.styled';
+import { convertDuration } from '../../helpers/duration-converter';
 import { Movie } from '../../types/movie';
 import {
   MovieDetailsContainer,
@@ -34,7 +35,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         <Genre>{genreList.join(', ')}</Genre>
         <AdditionalInfo>
           <span> {releaseDate?.getFullYear()}</span>
-          <span>{duration}</span>
+          <span>{convertDuration(duration)}</span>
         </AdditionalInfo>
         <Description>{description}</Description>
       </InfoContainer>

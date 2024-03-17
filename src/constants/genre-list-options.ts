@@ -1,13 +1,13 @@
 import { DropdownOption } from '../components/MovieForm/MovieForm';
 
 export const GENRE_LIST_OPTIONS: DropdownOption[] = [
-  { label: 'DOCUMENTARY', value: 'DOCUMENTARY' },
-  { label: 'COMEDY', value: 'COMEDY' },
-  { label: 'HORROR', value: 'HORROR' },
-  { label: 'CRIME', value: 'CRIME' },
+  { label: 'DOCUMENTARY', value: 'Documentary' },
+  { label: 'COMEDY', value: 'Comedy' },
+  { label: 'HORROR', value: 'Horror' },
+  { label: 'CRIME', value: 'Crime' },
 ];
 
 export const GENRE_LIST = [
-  'ALL',
-  ...GENRE_LIST_OPTIONS.map((genre) => genre.label),
+  'All',
+  ...GENRE_LIST_OPTIONS.map((genre) => genre.value),
 ];

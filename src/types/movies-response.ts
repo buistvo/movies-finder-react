@@ -12,3 +12,10 @@ export interface MoviesResponse {
   vote_average: number;
   vote_count: number;
 }
+
+export interface MovieQueryParams {
+  sortBy?: keyof MoviesResponse;
+  sortOrder?: 'asc' | 'desc';
+  search?: string;
+  searchBy?: 'title' | 'genres';
+}

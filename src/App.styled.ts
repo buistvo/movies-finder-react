@@ -12,6 +12,8 @@ export const ButtonRed = styled.button`
 `;
 
 export const MovieImage = styled.img`
+  min-width: 250px;
+  min-height: 350px;
   width: 250px;
   height: 350px;
 `;

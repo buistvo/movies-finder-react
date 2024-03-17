@@ -25,7 +25,9 @@ import { MovieForm } from '../MovieForm/MovieForm';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
+import { MovieQueryParams } from '../../types/movies-response';
+import { MoviesService } from '../../services/movies.service';
 
 const AppLogo = () => (
   <Logo>
@@ -40,6 +42,10 @@ const MoviesGrid = styled.div`
 `;
 
 export function MovieListPage() {
+  const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
+    null
+  );
+
   const [showDialog, setShowDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [genre, setGenre] = useState('');
@@ -60,13 +66,29 @@ export function MovieListPage() {
     title: '',
   });
 
+  const fetchData = async (params: MovieQueryParams) => {
+    try {
+      if (cancelSource) {
+        cancelSource.cancel();
+        setCancelSource(null);
+      }
+      const source = axios.CancelToken.source();
+      setCancelSource(source);
+      const result = await new MoviesService().get(params, source);
+      setCancelSource(null);
+      setMovieList(result.data);
+    } catch (error) {
+      if (axios.isCancel(error)) return;
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get('http://localhost:4000/movies');
-      console.log(result);
-    };
-    fetchData();
-  }, [searchTerm, genre, sort]);
+    fetchData({ search: searchTerm, searchBy: 'title' });
+  }, [searchTerm]);
+
+  useEffect(() => {
+    fetchData({ search: genre, searchBy: 'genres' });
+  }, [genre]);
 
   function toggleDialog(isOpen: boolean) {
     setShowDialog(isOpen);
@@ -79,7 +101,6 @@ export function MovieListPage() {
         <MovieForm
           movie={movie}
           onSubmit={(mov) => {
-            console.log(mov);
             setShowDialog(false);
           }}
         ></MovieForm>
@@ -105,7 +126,6 @@ export function MovieListPage() {
 
   function handleConfirmMovieDelete(movie: Movie) {
     toggleDialog(false);
-    console.log('delete', movie);
   }
 
   function handleAddMovie() {
@@ -114,13 +134,17 @@ export function MovieListPage() {
       children: (
         <MovieForm
           onSubmit={(mov) => {
-            console.log(mov);
             setShowDialog(false);
           }}
         ></MovieForm>
       ),
     });
     setShowDialog(true);
+  }
+
+  function handleSetGenre(genre: string) {
+    if (genre === 'All') return setGenre('');
+    setGenre(genre);
   }
   return (
     <MovieListPageContainer>
@@ -157,7 +181,7 @@ export function MovieListPage() {
         <DetailsHeader>
           <GenreSelect
             genreList={GENRE_LIST}
-            onSelect={(genre) => setGenre(genre)}
+            onSelect={(genre) => handleSetGenre(genre)}
           />
           <SortControl
             sortList={sortList}

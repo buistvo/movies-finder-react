@@ -29,7 +29,7 @@ export function GenreSelect({
           className={selectedGenre === genre ? 'selected' : ''}
           onClick={() => handleGenreButtonClick(genre)}
         >
-          {genre}
+          {genre.toUpperCase()}
         </button>
       ))}
     </div>
