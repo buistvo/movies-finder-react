@@ -7,12 +7,11 @@
   background-color: var(--primary-red);
   color: #fff;
   border-radius: 2px;
-  margin: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .input {
-  width: 80%;
-  margin: 0.5rem;
+  width: 100%;
   border: none;
   background-color: #2422427a;
 }

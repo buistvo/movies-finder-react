@@ -17,31 +17,61 @@ import { MovieDetails } from '../MovieDetails/MovieDetails';
 import { MovieForm } from '../MovieForm/MovieForm';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { useState } from 'react';
+import { Colors } from '../../Colors';
 
 const MovieListPageContainer = styled.div``;
-const SearchMovieContainer = styled.div`
-  height: 500px;
-  :before {
+const TopContainer = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  background: no-repeat center center;
+  background-image: url('images/literally-me.jpg');
+  background-repeat: repeat;
+  background-position: top;
+  background-repeat: repeat;
+  background-size: cover;
+  &::after {
     content: '';
     position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
     top: 0;
     left: 0;
-    width: calc(100% - 6px);
-    height: 100%;
-    background-image: url('images/literally-me.jpg');
-    background-repeat: repeat;
-    background-position: center;
-    background-repeat: repeat;
-    z-index: -1;
-    filter: blur(6px);
-    pointer-events: none;
   }
 `;
 
 const SearchMovieContent = styled.div`
   position: relative;
   z-index: 1;
-  height: 100%;
+`;
+
+const TopContainerHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  padding-top: 1rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+`;
+
+const Logo = styled.div`
+  color: ${Colors.PrimaryRed};
+  font-size: 1.1em;
+  :first-child {
+    font-weight: 1000;
+  }
+`;
+
+const AddMovieButton = styled.button`
+  background-color: ${Colors.Background}AA;
+  color: ${Colors.PrimaryRed};
+  &:hover {
+    background-color: ${Colors.Workspace}BB;
+  }
 `;
 
 export function MovieListPage() {
@@ -107,12 +137,18 @@ export function MovieListPage() {
   }
   return (
     <MovieListPageContainer>
-      <SearchMovieContainer>
+      <TopContainer>
+        <TopContainerHeader>
+          <Logo>
+            <span>netflix</span>
+            <span>roulette</span>
+          </Logo>
+          <AddMovieButton onClick={handleAddMovie}>+ ADD MOVIE</AddMovieButton>
+        </TopContainerHeader>
         <SearchMovieContent>
-          <ButtonRed onClick={handleAddMovie}> Add movie</ButtonRed>
           <SearchForm onSearch={(query) => console.log(query)} />
         </SearchMovieContent>
-      </SearchMovieContainer>
+      </TopContainer>
 
       <DetailsContainer>
         <MovieDetails movie={MOVIE_MOCK}></MovieDetails>

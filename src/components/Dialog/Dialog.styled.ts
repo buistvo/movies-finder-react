@@ -14,6 +14,7 @@ export const DialogContainer = styled.div`
   flex-direction: column;
   padding: 1rem;
   box-shadow: 0px 0px 5px 5px ${Colors.HoverRed};
+  z-index: 1;
 `;
 
 export const Header = styled.h2`
