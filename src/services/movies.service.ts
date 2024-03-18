@@ -5,7 +5,7 @@ import { Movie } from '../types/movie';
 
 export class MoviesService {
   async get(
-    params: MovieQueryParams,
+    params?: MovieQueryParams,
     cancellationToken?: CancelTokenSource
   ): Promise<PaginatedResponse<Movie[]>> {
     const response = await axios.get<PaginatedResponse<MoviesResponse[]>>(

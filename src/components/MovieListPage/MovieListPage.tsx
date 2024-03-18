@@ -18,7 +18,6 @@ import {
   TopContainer,
   MoviesGrid,
   SearchSwitcherButton,
-  SearchIcon,
   Icon,
 } from './MovieListPage.styled';
 import { Dialog, DialogProps } from '../Dialog/Dialog';
@@ -32,6 +31,7 @@ import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
 import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
+import { useIsMount } from '../../hooks/useIsMount';
 
 const AppLogo = () => (
   <Logo>
@@ -41,31 +41,19 @@ const AppLogo = () => (
 );
 
 export function MovieListPage() {
+  const isMount = useIsMount();
+
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
   );
-
   const [showDialog, setShowDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [genre, setGenre] = useState('');
   const [sort, setSort] = useState<keyof MoviesResponse>();
-  const [sortList, setSortList] = useState(['release_date', 'title']);
-  const [movieList, setMovieList] = useState([
-    MOVIE_MOCK,
-    MOVIE_MOCK,
-    MOVIE_MOCK,
-    MOVIE_MOCK,
-    MOVIE_MOCK,
-    MOVIE_MOCK,
-  ]);
+  const [movieList, setMovieList] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie>();
 
-  const [dialogContent, setDialogContent] = useState<DialogProps>({
-    children: null,
-    title: '',
-  });
-
-  const fetchData = async (params: MovieQueryParams) => {
+  const fetchData = async (params?: MovieQueryParams) => {
     try {
       if (cancelSource) {
         cancelSource.cancel();
@@ -81,7 +69,17 @@ export function MovieListPage() {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const [dialogContent, setDialogContent] = useState<DialogProps>({
+    children: null,
+    title: '',
+  });
+
   const searchByTerm = useEffect(() => {
+    if (isMount) return;
     fetchData({
       search: searchTerm,
       searchBy: 'title',
@@ -91,6 +89,7 @@ export function MovieListPage() {
   }, [searchTerm]);
 
   const searchByGenre = useEffect(() => {
+    if (isMount) return;
     fetchData({
       search: genre,
       searchBy: 'genres',
@@ -100,6 +99,7 @@ export function MovieListPage() {
   }, [genre]);
 
   const sortBy = useEffect(() => {
+    if (isMount) return;
     fetchData({
       search: searchTerm || genre,
       searchBy: searchTerm ? 'title' : 'genres',
