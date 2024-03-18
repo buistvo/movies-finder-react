@@ -16,6 +16,10 @@ import {
   SearchMovieContent,
   TopContainerHeader,
   TopContainer,
+  MoviesGrid,
+  SearchSwitcherButton,
+  SearchIcon,
+  Icon,
 } from './MovieListPage.styled';
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
@@ -24,10 +28,10 @@ import { MovieDetails } from '../MovieDetails/MovieDetails';
 import { MovieForm } from '../MovieForm/MovieForm';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import axios, { CancelTokenSource } from 'axios';
-import { MovieQueryParams } from '../../types/movies-response';
+import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
 import { MoviesService } from '../../services/movies.service';
+import { SORT_OPTIONS } from '../../constants/sort-options';
 
 const AppLogo = () => (
   <Logo>
@@ -35,11 +39,6 @@ const AppLogo = () => (
     <span>roulette</span>
   </Logo>
 );
-
-const MoviesGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
 
 export function MovieListPage() {
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
@@ -49,8 +48,8 @@ export function MovieListPage() {
   const [showDialog, setShowDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [genre, setGenre] = useState('');
-  const [sort, setSort] = useState('');
-  const [sortList, setSortList] = useState(['Release Date', 'Title']);
+  const [sort, setSort] = useState<keyof MoviesResponse>();
+  const [sortList, setSortList] = useState(['release_date', 'title']);
   const [movieList, setMovieList] = useState([
     MOVIE_MOCK,
     MOVIE_MOCK,
@@ -82,13 +81,32 @@ export function MovieListPage() {
     }
   };
 
-  useEffect(() => {
-    fetchData({ search: searchTerm, searchBy: 'title' });
+  const searchByTerm = useEffect(() => {
+    fetchData({
+      search: searchTerm,
+      searchBy: 'title',
+      sortBy: sort,
+      sortOrder: 'asc',
+    });
   }, [searchTerm]);
 
-  useEffect(() => {
-    fetchData({ search: genre, searchBy: 'genres' });
+  const searchByGenre = useEffect(() => {
+    fetchData({
+      search: genre,
+      searchBy: 'genres',
+      sortBy: sort,
+      sortOrder: 'asc',
+    });
   }, [genre]);
+
+  const sortBy = useEffect(() => {
+    fetchData({
+      search: searchTerm || genre,
+      searchBy: searchTerm ? 'title' : 'genres',
+      sortBy: sort,
+      sortOrder: 'asc',
+    });
+  }, [sort]);
 
   function toggleDialog(isOpen: boolean) {
     setShowDialog(isOpen);
@@ -153,9 +171,9 @@ export function MovieListPage() {
           <DetailsContainer>
             <TopContainerHeader>
               <AppLogo />
-              <AddMovieButton onClick={() => setSelectedMovie(undefined)}>
-                SEARCH
-              </AddMovieButton>
+              <SearchSwitcherButton onClick={() => setSelectedMovie(undefined)}>
+                <Icon src={'/images/svg/magnifying-glass-svgrepo-com.svg'} />
+              </SearchSwitcherButton>
             </TopContainerHeader>
             <MovieDetails movie={selectedMovie}></MovieDetails>
           </DetailsContainer>
@@ -184,7 +202,7 @@ export function MovieListPage() {
             onSelect={(genre) => handleSetGenre(genre)}
           />
           <SortControl
-            sortList={sortList}
+            sortList={SORT_OPTIONS}
             onSortChange={(sortOption) => setSort(sortOption)}
           ></SortControl>
         </DetailsHeader>

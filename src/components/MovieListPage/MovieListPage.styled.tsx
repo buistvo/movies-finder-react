@@ -101,3 +101,21 @@ export const TopContainer = styled.div`
   display: grid;
   min-height: 460px;
 `;
+
+export const MoviesGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const SearchSwitcherButton = styled.button`
+  background-color: ${Colors.Workspace};
+  color: ${Colors.PrimaryRed};
+  &:hover {
+    background-color: ${Colors.Workspace};
+  }
+`;
+
+export const Icon = styled.img`
+  width: 30px;
+  height: 30px;
+`;
