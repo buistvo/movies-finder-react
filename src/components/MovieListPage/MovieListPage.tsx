@@ -224,6 +224,7 @@ export function MovieListPage() {
             onSelect={(genre) => handleSetGenre(genre)}
           />
           <SortControl
+            initialValue={sortBy}
             sortList={SORT_OPTIONS}
             onSortChange={(sortOption) => setSortBy(sortOption)}
           ></SortControl>

@@ -5,8 +5,13 @@ import { SortControlContainer, Select, Option } from './SortControl.styled';
 interface SortControlProps {
   sortList: SortOption[];
   onSortChange?: (sortBy: keyof MoviesResponse) => void;
+  initialValue: string;
 }
-export function SortControl({ sortList, onSortChange }: SortControlProps) {
+export function SortControl({
+  sortList,
+  onSortChange,
+  initialValue,
+}: SortControlProps) {
   function handleSortChange(newValue: keyof MoviesResponse) {
     if (onSortChange) onSortChange(newValue);
   }
@@ -19,6 +24,7 @@ export function SortControl({ sortList, onSortChange }: SortControlProps) {
         onChange={(e) =>
           handleSortChange(e.target.value as keyof MoviesResponse)
         }
+        defaultValue={initialValue}
       >
         {sortList.map(({ label, field }) => (
           <Option label={label} value={field} key={field}>
