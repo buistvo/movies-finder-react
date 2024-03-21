@@ -32,6 +32,7 @@ import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
 import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
 import { useIsMount } from '../../hooks/useIsMount';
+import { useSearchParams } from 'react-router-dom';
 
 const AppLogo = () => (
   <Logo>
@@ -41,6 +42,8 @@ const AppLogo = () => (
 );
 
 export function MovieListPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get('query'));
   const isMount = useIsMount();
 
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
