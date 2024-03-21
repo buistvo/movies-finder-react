@@ -36,13 +36,18 @@ export function SearchForm({ initialValue, onSearch }: InitialProps) {
       <SearchHeader>FIND YOUR MOVIE</SearchHeader>
       <form onSubmit={handleSubmit} className="search-container">
         <input
+          data-testid="search-input"
           type="text"
           className="input"
           value={value}
           onChange={handleInputChange}
           placeholder="What do you want to watch?"
         />
-        <ButtonRed type="submit" className="search-button">
+        <ButtonRed
+          data-testid="search-button"
+          type="submit"
+          className="search-button"
+        >
           SEARCH
         </ButtonRed>
       </form>

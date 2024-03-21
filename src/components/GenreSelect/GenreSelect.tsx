@@ -25,6 +25,7 @@ export function GenreSelect({
     <div className="genre-list">
       {genreList.map((genre) => (
         <button
+          data-testid={genre}
           key={genre}
           className={selectedGenre === genre ? 'selected' : ''}
           onClick={() => handleGenreButtonClick(genre)}
