@@ -49,9 +49,11 @@ export function MovieListPage() {
     null
   );
   const [showDialog, setShowDialog] = useState(false);
-  const [search, setSearch] = useState('');
-  const [genre, setGenre] = useState('');
-  const [sortBy, setSortBy] = useState<keyof MoviesResponse>();
+  const [search, setSearch] = useState(searchParams.get('search'));
+  const [genre, setGenre] = useState(searchParams.get('genre'));
+  const [sortBy, setSortBy] = useState<keyof MoviesResponse>(
+    searchParams.get('sortBy') as keyof MoviesResponse
+  );
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie>();
 
@@ -72,7 +74,12 @@ export function MovieListPage() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData({
+      search: search || genre,
+      searchBy: search ? 'title' : 'genres',
+      sortBy: sortBy,
+      sortOrder: 'asc',
+    });
   }, []);
 
   const [dialogContent, setDialogContent] = useState<DialogProps>({
@@ -81,9 +88,10 @@ export function MovieListPage() {
   });
 
   useEffect(() => {
+    if (isMount) return;
     const params = {
-      ...(search.length && { search }),
-      ...(genre.length && { genre }),
+      ...(search?.length && { search }),
+      ...(genre?.length && { genre }),
       ...(sortBy?.length && { sortBy }),
     };
     setSearchParams(params);
@@ -92,7 +100,7 @@ export function MovieListPage() {
   useEffect(() => {
     if (isMount) return;
     fetchData({
-      search: search,
+      search,
       searchBy: 'title',
       sortBy: sortBy,
       sortOrder: 'asc',
@@ -198,7 +206,7 @@ export function MovieListPage() {
             </TopContainerHeader>
             <SearchMovieContent>
               <SearchForm
-                initialValue={search}
+                initialValue={search || ''}
                 onSearch={(query) => setSearch(query)}
               />
             </SearchMovieContent>
@@ -209,6 +217,7 @@ export function MovieListPage() {
       <MoviesContainer>
         <DetailsHeader>
           <GenreSelect
+            initialSelectedGenre={genre || ''}
             genreList={GENRE_LIST}
             onSelect={(genre) => handleSetGenre(genre)}
           />

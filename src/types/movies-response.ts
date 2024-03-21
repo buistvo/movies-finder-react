@@ -14,8 +14,8 @@ export interface MoviesResponse {
 }
 
 export interface MovieQueryParams {
-  sortBy?: keyof MoviesResponse;
-  sortOrder?: 'asc' | 'desc';
-  search?: string;
-  searchBy?: 'title' | 'genres';
+  sortBy?: keyof MoviesResponse | null;
+  sortOrder?: 'asc' | 'desc' | null;
+  search?: string | null;
+  searchBy?: 'title' | 'genres' | null;
 }
