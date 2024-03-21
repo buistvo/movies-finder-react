@@ -52,6 +52,7 @@ export function MovieListPage() {
   const [sort, setSort] = useState<keyof MoviesResponse>();
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie>();
+  const [total, setTotal] = useState<number>();
 
   const fetchData = async (params?: MovieQueryParams) => {
     try {
@@ -64,21 +65,22 @@ export function MovieListPage() {
       const result = await new MoviesService().get(params, source);
       setCancelSource(null);
       setMovieList(result.data);
+      setTotal(result.totalAmount);
     } catch (error) {
       if (axios.isCancel(error)) return;
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const [dialogContent, setDialogContent] = useState<DialogProps>({
     children: null,
     title: '',
   });
 
-  const searchByTerm = useEffect(() => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (isMount) return;
     fetchData({
       search: searchTerm,
@@ -88,7 +90,7 @@ export function MovieListPage() {
     });
   }, [searchTerm]);
 
-  const searchByGenre = useEffect(() => {
+  useEffect(() => {
     if (isMount) return;
     fetchData({
       search: genre,
@@ -98,7 +100,7 @@ export function MovieListPage() {
     });
   }, [genre]);
 
-  const sortBy = useEffect(() => {
+  useEffect(() => {
     if (isMount) return;
     fetchData({
       search: searchTerm || genre,
@@ -206,7 +208,7 @@ export function MovieListPage() {
             onSortChange={(sortOption) => setSort(sortOption)}
           ></SortControl>
         </DetailsHeader>
-        <MoviesTotal>39 MOVIES FOUND</MoviesTotal>
+        <MoviesTotal>{total} MOVIES FOUND</MoviesTotal>
         <MoviesGrid>
           {movieList.map((movie, index) => (
             <MovieTile
