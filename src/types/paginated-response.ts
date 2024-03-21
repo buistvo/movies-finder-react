@@ -1,6 +1,6 @@
 export interface PaginatedResponse<T> {
   data: T;
-  total: number;
+  totalAmount: number;
   offset: number;
   limit: number;
 }

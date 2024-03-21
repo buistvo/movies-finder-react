@@ -56,6 +56,7 @@ export function MovieListPage() {
   );
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie>();
+  const [total, setTotal] = useState<number>();
 
   const fetchData = async (params?: MovieQueryParams) => {
     try {
@@ -68,10 +69,16 @@ export function MovieListPage() {
       const result = await new MoviesService().get(params, source);
       setCancelSource(null);
       setMovieList(result.data);
+      setTotal(result.totalAmount);
     } catch (error) {
       if (axios.isCancel(error)) return;
     }
   };
+
+  const [dialogContent, setDialogContent] = useState<DialogProps>({
+    children: null,
+    title: '',
+  });
 
   useEffect(() => {
     fetchData({
@@ -81,11 +88,6 @@ export function MovieListPage() {
       sortOrder: 'asc',
     });
   }, []);
-
-  const [dialogContent, setDialogContent] = useState<DialogProps>({
-    children: null,
-    title: '',
-  });
 
   useEffect(() => {
     if (isMount) return;
@@ -226,7 +228,7 @@ export function MovieListPage() {
             onSortChange={(sortOption) => setSortBy(sortOption)}
           ></SortControl>
         </DetailsHeader>
-        <MoviesTotal>39 MOVIES FOUND</MoviesTotal>
+        <MoviesTotal>{total} MOVIES FOUND</MoviesTotal>
         <MoviesGrid>
           {movieList.map((movie, index) => (
             <MovieTile
