@@ -43,16 +43,15 @@ const AppLogo = () => (
 
 export function MovieListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams.get('query'));
   const isMount = useIsMount();
 
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
   );
   const [showDialog, setShowDialog] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [search, setSearch] = useState('');
   const [genre, setGenre] = useState('');
-  const [sort, setSort] = useState<keyof MoviesResponse>();
+  const [sortBy, setSortBy] = useState<keyof MoviesResponse>();
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie>();
 
@@ -81,35 +80,44 @@ export function MovieListPage() {
     title: '',
   });
 
-  const searchByTerm = useEffect(() => {
+  useEffect(() => {
+    const params = {
+      ...(search.length && { search }),
+      ...(genre.length && { genre }),
+      ...(sortBy?.length && { sortBy }),
+    };
+    setSearchParams(params);
+  }, [search, genre, sortBy]);
+
+  useEffect(() => {
     if (isMount) return;
     fetchData({
-      search: searchTerm,
+      search: search,
       searchBy: 'title',
-      sortBy: sort,
+      sortBy: sortBy,
       sortOrder: 'asc',
     });
-  }, [searchTerm]);
+  }, [search]);
 
-  const searchByGenre = useEffect(() => {
+  useEffect(() => {
     if (isMount) return;
     fetchData({
       search: genre,
       searchBy: 'genres',
-      sortBy: sort,
+      sortBy: sortBy,
       sortOrder: 'asc',
     });
   }, [genre]);
 
-  const sortBy = useEffect(() => {
+  useEffect(() => {
     if (isMount) return;
     fetchData({
-      search: searchTerm || genre,
-      searchBy: searchTerm ? 'title' : 'genres',
-      sortBy: sort,
+      search: search || genre,
+      searchBy: search ? 'title' : 'genres',
+      sortBy: sortBy,
       sortOrder: 'asc',
     });
-  }, [sort]);
+  }, [sortBy]);
 
   function toggleDialog(isOpen: boolean) {
     setShowDialog(isOpen);
@@ -190,8 +198,8 @@ export function MovieListPage() {
             </TopContainerHeader>
             <SearchMovieContent>
               <SearchForm
-                initialValue={searchTerm}
-                onSearch={(query) => setSearchTerm(query)}
+                initialValue={search}
+                onSearch={(query) => setSearch(query)}
               />
             </SearchMovieContent>
           </SearchMovieContainer>
@@ -206,7 +214,7 @@ export function MovieListPage() {
           />
           <SortControl
             sortList={SORT_OPTIONS}
-            onSortChange={(sortOption) => setSort(sortOption)}
+            onSortChange={(sortOption) => setSortBy(sortOption)}
           ></SortControl>
         </DetailsHeader>
         <MoviesTotal>39 MOVIES FOUND</MoviesTotal>
