@@ -6,7 +6,7 @@ describe('MovieListPage', () => {
   it('updates query params when searching', () => {
     cy.get('[data-testid=search-input]').type('terminator');
     cy.get('[data-testid=search-button]').click();
-    cy.url().should('include', 'search=terminator');
+    cy.url().should('include', 'query=terminator');
   });
 
   it('updates query params when selecting genre', () => {

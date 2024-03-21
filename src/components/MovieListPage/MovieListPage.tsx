@@ -49,7 +49,7 @@ export function MovieListPage() {
     null
   );
   const [showDialog, setShowDialog] = useState(false);
-  const [search, setSearch] = useState(searchParams.get('search'));
+  const [query, setSearch] = useState(searchParams.get('query'));
   const [genre, setGenre] = useState(searchParams.get('genre'));
   const [sortBy, setSortBy] = useState<keyof MoviesResponse>(
     searchParams.get('sortBy') as keyof MoviesResponse
@@ -82,8 +82,8 @@ export function MovieListPage() {
 
   useEffect(() => {
     fetchData({
-      search: search || genre,
-      searchBy: search ? 'title' : 'genres',
+      search: query || genre,
+      searchBy: query ? 'title' : 'genres',
       sortBy: sortBy,
       sortOrder: 'asc',
     });
@@ -92,22 +92,22 @@ export function MovieListPage() {
   useEffect(() => {
     if (isMount) return;
     const params = {
-      ...(search?.length && { search }),
+      ...(query?.length && { query }),
       ...(genre?.length && { genre }),
       ...(sortBy?.length && { sortBy }),
     };
     setSearchParams(params);
-  }, [search, genre, sortBy]);
+  }, [query, genre, sortBy]);
 
   useEffect(() => {
     if (isMount) return;
     fetchData({
-      search,
+      search: query,
       searchBy: 'title',
       sortBy: sortBy,
       sortOrder: 'asc',
     });
-  }, [search]);
+  }, [query]);
 
   useEffect(() => {
     if (isMount) return;
@@ -122,8 +122,8 @@ export function MovieListPage() {
   useEffect(() => {
     if (isMount) return;
     fetchData({
-      search: search || genre,
-      searchBy: search ? 'title' : 'genres',
+      search: query || genre,
+      searchBy: query ? 'title' : 'genres',
       sortBy: sortBy,
       sortOrder: 'asc',
     });
@@ -208,7 +208,7 @@ export function MovieListPage() {
             </TopContainerHeader>
             <SearchMovieContent>
               <SearchForm
-                initialValue={search || ''}
+                initialValue={query || ''}
                 onSearch={(query) => setSearch(query)}
               />
             </SearchMovieContent>
