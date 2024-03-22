@@ -1,24 +1,15 @@
 import { GENRE_LIST } from '../../constants/genre-list-options';
-import { MOVIE_MOCK } from '../../mocks/movie';
 import { GenreSelect } from '../GenreSelect/GenreSelect';
 import { MovieTile } from '../MovieTile/MovieTile';
 import { SortControl } from '../SortControl/SortControl';
 import {
   MoviesContainer,
   DetailsHeader,
-  DetailsContainer,
-  AddMovieButton,
-  Logo,
   MovieListPageContainer,
   MovieListPageFooter,
   MoviesTotal,
-  SearchMovieContainer,
-  SearchMovieContent,
-  TopContainerHeader,
   TopContainer,
   MoviesGrid,
-  SearchSwitcherButton,
-  Icon,
 } from './MovieListPage.styled';
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
@@ -33,13 +24,8 @@ import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
 import { useIsMount } from '../../hooks/useIsMount';
 import { useSearchParams } from 'react-router-dom';
-
-const AppLogo = () => (
-  <Logo>
-    <span>netflix</span>
-    <span>roulette</span>
-  </Logo>
-);
+import { Outlet } from 'react-router-dom';
+import { AppLogo } from '../../App';
 
 export function MovieListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -188,32 +174,7 @@ export function MovieListPage() {
   return (
     <MovieListPageContainer>
       <TopContainer>
-        {selectedMovie ? (
-          <DetailsContainer>
-            <TopContainerHeader>
-              <AppLogo />
-              <SearchSwitcherButton onClick={() => setSelectedMovie(undefined)}>
-                <Icon src={'/images/svg/magnifying-glass-svgrepo-com.svg'} />
-              </SearchSwitcherButton>
-            </TopContainerHeader>
-            <MovieDetails movie={selectedMovie}></MovieDetails>
-          </DetailsContainer>
-        ) : (
-          <SearchMovieContainer>
-            <TopContainerHeader>
-              <AppLogo />
-              <AddMovieButton onClick={handleAddMovie}>
-                + ADD MOVIE
-              </AddMovieButton>
-            </TopContainerHeader>
-            <SearchMovieContent>
-              <SearchForm
-                initialValue={query || ''}
-                onSearch={(query) => setSearch(query)}
-              />
-            </SearchMovieContent>
-          </SearchMovieContainer>
-        )}
+        <Outlet></Outlet>
       </TopContainer>
 
       <MoviesContainer>

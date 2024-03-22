@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchForm.css';
 import { ButtonRed } from '../../App.styled';
 import styled from 'styled-components';
+import {} from './SearchForm.styled';
+import { AppLogo } from '../../App';
 
 interface InitialProps {
   initialValue?: string;

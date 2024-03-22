@@ -1,4 +1,5 @@
-import { MovieImage } from '../../App.styled';
+import { AppLogo } from '../../App';
+import { Icon, MovieImage } from '../../App.styled';
 import { convertDuration } from '../../helpers/duration-converter';
 import { Movie } from '../../types/movie';
 import {
