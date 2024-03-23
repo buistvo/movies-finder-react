@@ -18,4 +18,5 @@ export interface MovieQueryParams {
   sortOrder?: 'asc' | 'desc' | null;
   search?: string | null;
   searchBy?: 'title' | 'genres' | null;
+  filter?: string | null;
 }

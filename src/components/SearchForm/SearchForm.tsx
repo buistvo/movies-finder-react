@@ -1,25 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchForm.css';
 import { ButtonRed } from '../../App.styled';
-import styled from 'styled-components';
-import {} from './SearchForm.styled';
-import { AppLogo } from '../../App';
+import { SearchContainer, SearchHeader } from './SearchForm.styled';
 
 interface InitialProps {
   initialValue?: string;
   onSearch: (query: string) => void;
 }
-
-const SearchContainer = styled.div`
-  width: 80%;
-  display: inline-block;
-`;
-
-const SearchHeader = styled.h2`
-  font-weight: 100;
-  text-align: left;
-  font-size: 2.5em;
-`;
 
 export function SearchForm({ initialValue, onSearch }: InitialProps) {
   const [value, setValue] = useState(initialValue || '');

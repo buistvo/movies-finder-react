@@ -73,10 +73,11 @@ export function MovieListPage() {
   useEffect(() => {
     const query = searchParams.get('query');
     fetchData({
-      search: query || genre,
-      searchBy: query ? 'title' : 'genres',
+      search: query,
+      searchBy: 'title',
       sortBy: sortBy,
       sortOrder: 'asc',
+      filter: genre,
     });
   }, [searchParams]);
 
