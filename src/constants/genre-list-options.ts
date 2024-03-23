@@ -7,7 +7,4 @@ export const GENRE_LIST_OPTIONS: DropdownOption[] = [
   { label: 'CRIME', value: 'Crime' },
 ];
 
-export const GENRE_LIST = [
-  'All',
-  ...GENRE_LIST_OPTIONS.map((genre) => genre.value),
-];
+export const GENRE_LIST = [{ label: 'ALL', value: '' }, ...GENRE_LIST_OPTIONS];

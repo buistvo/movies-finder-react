@@ -1,5 +1,4 @@
 import { GENRE_LIST } from '../../constants/genre-list-options';
-import { MOVIE_MOCK } from '../../mocks/movie';
 import { GenreSelect } from '../GenreSelect/GenreSelect';
 import { MovieTile } from '../MovieTile/MovieTile';
 import { SortControl } from '../SortControl/SortControl';
@@ -31,7 +30,7 @@ import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
 import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
-import { useIsMount } from '../../hooks/useIsMount';
+import SearchLogoIcon from '/images/svg/magnifying-glass-svgrepo-com.svg';
 
 const AppLogo = () => (
   <Logo>
@@ -41,8 +40,6 @@ const AppLogo = () => (
 );
 
 export function MovieListPage() {
-  const isMount = useIsMount();
-
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
   );
@@ -77,42 +74,13 @@ export function MovieListPage() {
   });
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (isMount) return;
-    fetchData({
-      search: searchTerm,
-      searchBy: 'title',
-      sortBy: sort,
-      sortOrder: 'asc',
-    });
-  }, [searchTerm]);
-
-  useEffect(() => {
-    if (isMount) return;
-    fetchData({
-      search: genre,
-      searchBy: 'genres',
-      sortBy: sort,
-      sortOrder: 'asc',
-    });
-  }, [genre]);
-
-  useEffect(() => {
-    if (isMount) return;
     fetchData({
       search: searchTerm || genre,
       searchBy: searchTerm ? 'title' : 'genres',
       sortBy: sort,
       sortOrder: 'asc',
     });
-  }, [sort]);
-
-  function toggleDialog(isOpen: boolean) {
-    setShowDialog(isOpen);
-  }
+  }, [searchTerm, genre, sort]);
 
   function handleMovieEdit(movie: Movie) {
     setDialogContent({
@@ -129,23 +97,19 @@ export function MovieListPage() {
     setShowDialog(true);
   }
 
-  function handleMovieDeleteClick(movie: Movie) {
+  function handleMovieDeleteClick() {
     setDialogContent({
       title: 'DELETE MOVIE',
       children: (
         <DialogContent>
           <span>Are you sure you want to delete this movie?</span>
-          <ConfirmButton onClick={() => handleConfirmMovieDelete(movie)}>
+          <ConfirmButton onClick={() => setShowDialog(false)}>
             CONFIRM
           </ConfirmButton>
         </DialogContent>
       ),
     });
     setShowDialog(true);
-  }
-
-  function handleConfirmMovieDelete(movie: Movie) {
-    toggleDialog(false);
   }
 
   function handleAddMovie() {
@@ -162,10 +126,6 @@ export function MovieListPage() {
     setShowDialog(true);
   }
 
-  function handleSetGenre(genre: string) {
-    if (genre === 'All') return setGenre('');
-    setGenre(genre);
-  }
   return (
     <MovieListPageContainer>
       <TopContainer>
@@ -174,7 +134,7 @@ export function MovieListPage() {
             <TopContainerHeader>
               <AppLogo />
               <SearchSwitcherButton onClick={() => setSelectedMovie(undefined)}>
-                <Icon src={'/images/svg/magnifying-glass-svgrepo-com.svg'} />
+                <Icon src={SearchLogoIcon} />
               </SearchSwitcherButton>
             </TopContainerHeader>
             <MovieDetails movie={selectedMovie}></MovieDetails>
@@ -188,10 +148,7 @@ export function MovieListPage() {
               </AddMovieButton>
             </TopContainerHeader>
             <SearchMovieContent>
-              <SearchForm
-                initialValue={searchTerm}
-                onSearch={(query) => setSearchTerm(query)}
-              />
+              <SearchForm initialValue={searchTerm} onSearch={setSearchTerm} />
             </SearchMovieContent>
           </SearchMovieContainer>
         )}
@@ -199,13 +156,10 @@ export function MovieListPage() {
 
       <MoviesContainer>
         <DetailsHeader>
-          <GenreSelect
-            genreList={GENRE_LIST}
-            onSelect={(genre) => handleSetGenre(genre)}
-          />
+          <GenreSelect genreList={GENRE_LIST} onSelect={setGenre} />
           <SortControl
             sortList={SORT_OPTIONS}
-            onSortChange={(sortOption) => setSort(sortOption)}
+            onSortChange={setSort}
           ></SortControl>
         </DetailsHeader>
         <MoviesTotal>{total} MOVIES FOUND</MoviesTotal>
@@ -215,7 +169,7 @@ export function MovieListPage() {
               key={movie.name + index}
               onEdit={handleMovieEdit}
               onDelete={handleMovieDeleteClick}
-              onClick={(movie) => setSelectedMovie(movie)}
+              onClick={setSelectedMovie}
               movie={movie}
             ></MovieTile>
           ))}
@@ -226,7 +180,10 @@ export function MovieListPage() {
         <AppLogo />
       </MovieListPageFooter>
       {showDialog && (
-        <Dialog title={dialogContent.title} onClose={() => toggleDialog(false)}>
+        <Dialog
+          title={dialogContent.title}
+          onClose={() => setShowDialog(false)}
+        >
           {dialogContent.children}
         </Dialog>
       )}
