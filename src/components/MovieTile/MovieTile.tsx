@@ -72,7 +72,7 @@ export function MovieTile({ movie, onDelete, onEdit }: MovieTileProps) {
         <Title> {movie.name} </Title>
         <Year> {movie.releaseDate.getFullYear()} </Year>
       </MovieInfo>
-      <GenreList> {movie.genreList.join(',')} </GenreList>
+      <GenreList> {movie.genreList.join(', ')} </GenreList>
     </Container>
   );
 }
