@@ -6,7 +6,7 @@ import {
   MovieDetailsRoot,
   movieDetailsLoader,
 } from './components/MovieDetailsRoot/MovieDetailsRoot';
-import { SearchFormRoot } from './components/MovieDetails/SearchFormRoot/SearchFormRoot';
+import { SearchFormRoot } from './components/SearchFormRoot/SearchFormRoot';
 const router = createBrowserRouter([
   {
     path: '/',

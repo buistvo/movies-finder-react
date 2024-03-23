@@ -18,4 +18,9 @@ describe('MovieListPage', () => {
     cy.get('[data-testid=sort-select]').select('RATING');
     cy.url().should('include', 'sortBy=vote_average');
   });
+
+  it('should render details when navigate to /:movieId', () => {
+    cy.visit('http://localhost:5173/299536');
+    cy.get('[data-testid=movie-details-container]').should('be.visible');
+  });
 });

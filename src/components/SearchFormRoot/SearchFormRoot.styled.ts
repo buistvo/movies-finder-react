@@ -1,4 +1,4 @@
-import { Colors } from '../../../Colors';
+import { Colors } from '../../Colors';
 import styled from 'styled-components';
 
 export const AddMovieButton = styled.button`

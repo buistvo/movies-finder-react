@@ -1,11 +1,11 @@
-import { SearchForm } from '../../SearchForm/SearchForm';
-import { AppLogo } from '../../../App';
+import { SearchForm } from '../SearchForm/SearchForm';
+import { AppLogo } from '../../App';
 import {
   ContainerWithBackground,
   AddMovieButton,
   SearchMovieContent,
 } from './SearchFormRoot.styled';
-import { TopContainerHeader } from '../../MovieListPage/MovieListPage.styled';
+import { TopContainerHeader } from '../MovieListPage/MovieListPage.styled';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
