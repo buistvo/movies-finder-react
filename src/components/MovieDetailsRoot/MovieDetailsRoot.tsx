@@ -7,6 +7,7 @@ import {
   DetailsContainer,
   SearchSwitcherButton,
 } from './MovieDetailsRoot.styled';
+import SearchLogoIcon from '/images/svg/magnifying-glass-svgrepo-com.svg';
 
 export function MovieDetailsRoot() {
   return (
@@ -14,7 +15,7 @@ export function MovieDetailsRoot() {
       <TopContainerHeader>
         <AppLogo />
         <SearchSwitcherButton>
-          <Icon src={'/images/svg/magnifying-glass-svgrepo-com.svg'} />
+          <Icon src={SearchLogoIcon} />
         </SearchSwitcherButton>
       </TopContainerHeader>
       <MovieDetails movie={MOVIE_MOCK} />

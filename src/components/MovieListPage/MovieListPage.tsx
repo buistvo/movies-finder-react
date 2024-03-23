@@ -22,20 +22,18 @@ import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
 import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
-import { useIsMount } from '../../hooks/useIsMount';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { AppLogo } from '../../App';
 
 export function MovieListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const isMount = useIsMount();
 
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
   );
   const [showDialog, setShowDialog] = useState(false);
-  const [query, setSearch] = useState(searchParams.get('query'));
+  const [query, setQuery] = useState(searchParams.get('query'));
   const [genre, setGenre] = useState(searchParams.get('genre'));
   const [sortBy, setSortBy] = useState<keyof MoviesResponse>(
     searchParams.get('sortBy') as keyof MoviesResponse
@@ -67,16 +65,6 @@ export function MovieListPage() {
   });
 
   useEffect(() => {
-    fetchData({
-      search: query || genre,
-      searchBy: query ? 'title' : 'genres',
-      sortBy: sortBy,
-      sortOrder: 'asc',
-    });
-  }, []);
-
-  useEffect(() => {
-    if (isMount) return;
     const params = {
       ...(query?.length && { query }),
       ...(genre?.length && { genre }),
@@ -86,38 +74,13 @@ export function MovieListPage() {
   }, [query, genre, sortBy]);
 
   useEffect(() => {
-    if (isMount) return;
-    fetchData({
-      search: query,
-      searchBy: 'title',
-      sortBy: sortBy,
-      sortOrder: 'asc',
-    });
-  }, [query]);
-
-  useEffect(() => {
-    if (isMount) return;
-    fetchData({
-      search: genre,
-      searchBy: 'genres',
-      sortBy: sortBy,
-      sortOrder: 'asc',
-    });
-  }, [genre]);
-
-  useEffect(() => {
-    if (isMount) return;
     fetchData({
       search: query || genre,
       searchBy: query ? 'title' : 'genres',
       sortBy: sortBy,
       sortOrder: 'asc',
     });
-  }, [sortBy]);
-
-  function toggleDialog(isOpen: boolean) {
-    setShowDialog(isOpen);
-  }
+  }, [query, genre, sortBy]);
 
   function handleMovieEdit(movie: Movie) {
     setDialogContent({
@@ -134,23 +97,19 @@ export function MovieListPage() {
     setShowDialog(true);
   }
 
-  function handleMovieDeleteClick(movie: Movie) {
+  function handleMovieDeleteClick() {
     setDialogContent({
       title: 'DELETE MOVIE',
       children: (
         <DialogContent>
           <span>Are you sure you want to delete this movie?</span>
-          <ConfirmButton onClick={() => handleConfirmMovieDelete(movie)}>
+          <ConfirmButton onClick={() => setShowDialog(false)}>
             CONFIRM
           </ConfirmButton>
         </DialogContent>
       ),
     });
     setShowDialog(true);
-  }
-
-  function handleConfirmMovieDelete(movie: Movie) {
-    toggleDialog(false);
   }
 
   function handleAddMovie() {
@@ -167,10 +126,6 @@ export function MovieListPage() {
     setShowDialog(true);
   }
 
-  function handleSetGenre(genre: string) {
-    if (genre === 'All') return setGenre('');
-    setGenre(genre);
-  }
   return (
     <MovieListPageContainer>
       <TopContainer>
@@ -182,7 +137,7 @@ export function MovieListPage() {
           <GenreSelect
             initialSelectedGenre={genre || ''}
             genreList={GENRE_LIST}
-            onSelect={(genre) => handleSetGenre(genre)}
+            onSelect={setGenre}
           />
           <SortControl
             initialValue={sortBy}
@@ -197,7 +152,7 @@ export function MovieListPage() {
               key={movie.name + index}
               onEdit={handleMovieEdit}
               onDelete={handleMovieDeleteClick}
-              onClick={(movie) => setSelectedMovie(movie)}
+              onClick={setSelectedMovie}
               movie={movie}
             ></MovieTile>
           ))}
@@ -208,7 +163,10 @@ export function MovieListPage() {
         <AppLogo />
       </MovieListPageFooter>
       {showDialog && (
-        <Dialog title={dialogContent.title} onClose={() => toggleDialog(false)}>
+        <Dialog
+          title={dialogContent.title}
+          onClose={() => setShowDialog(false)}
+        >
           {dialogContent.children}
         </Dialog>
       )}

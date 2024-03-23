@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import './GenreSelect.css';
+import { DropdownOption } from '../MovieForm/MovieForm';
 
 interface InitialProps {
-  genreList: string[];
+  genreList: DropdownOption[];
   initialSelectedGenre?: string;
   onSelect: (genre: string) => void;
 }
@@ -26,11 +27,11 @@ export function GenreSelect({
       {genreList.map((genre) => (
         <button
           data-testid={genre}
-          key={genre}
-          className={selectedGenre === genre ? 'selected' : ''}
-          onClick={() => handleGenreButtonClick(genre)}
+          key={genre.value}
+          className={selectedGenre === genre.value ? 'selected' : ''}
+          onClick={() => handleGenreButtonClick(genre.value)}
         >
-          {genre.toUpperCase()}
+          {genre.label}
         </button>
       ))}
     </div>
