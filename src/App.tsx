@@ -2,7 +2,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import { MovieListPage } from './components/MovieListPage/MovieListPage';
 import { Logo } from './App.styled';
-import { MovieDetailsRoot } from './components/MovieDetailsRoot/MovieDetailsRoot';
+import {
+  MovieDetailsRoot,
+  movieDetailsLoader,
+} from './components/MovieDetailsRoot/MovieDetailsRoot';
 import { SearchFormRoot } from './components/MovieDetails/SearchFormRoot/SearchFormRoot';
 const router = createBrowserRouter([
   {
@@ -16,6 +19,7 @@ const router = createBrowserRouter([
       {
         path: '/:movieId',
         element: <MovieDetailsRoot />,
+        loader: movieDetailsLoader,
       },
     ],
   },

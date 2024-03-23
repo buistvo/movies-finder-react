@@ -4,7 +4,7 @@ import { PaginatedResponse } from '../types/paginated-response';
 import { Movie } from '../types/movie';
 
 export class MoviesService {
-  async get(
+  async getAll(
     params?: MovieQueryParams,
     cancellationToken?: CancelTokenSource
   ): Promise<PaginatedResponse<Movie[]>> {
@@ -19,6 +19,19 @@ export class MoviesService {
       ...response.data,
       data: response.data.data.map((movie) => this.mapResponse(movie)),
     };
+  }
+
+  async getById(
+    id: string,
+    cancellationToken?: CancelTokenSource
+  ): Promise<Movie> {
+    const response = await axios.get<MoviesResponse>(
+      `http://localhost:4000/movies/${id}`,
+      {
+        cancelToken: cancellationToken?.token,
+      }
+    );
+    return this.mapResponse(response.data);
   }
 
   mapResponse(response: MoviesResponse): Movie {

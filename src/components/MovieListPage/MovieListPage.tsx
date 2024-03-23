@@ -50,7 +50,7 @@ export function MovieListPage() {
       }
       const source = axios.CancelToken.source();
       setCancelSource(source);
-      const result = await new MoviesService().get(params, source);
+      const result = await new MoviesService().getAll(params, source);
       setCancelSource(null);
       setMovieList(result.data);
       setTotal(result.totalAmount);
@@ -129,7 +129,7 @@ export function MovieListPage() {
   return (
     <MovieListPageContainer>
       <TopContainer>
-        <Outlet></Outlet>
+        <Outlet />
       </TopContainer>
 
       <MoviesContainer>
@@ -152,7 +152,6 @@ export function MovieListPage() {
               key={movie.name + index}
               onEdit={handleMovieEdit}
               onDelete={handleMovieDeleteClick}
-              onClick={setSelectedMovie}
               movie={movie}
             ></MovieTile>
           ))}

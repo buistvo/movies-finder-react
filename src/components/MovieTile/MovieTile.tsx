@@ -14,6 +14,7 @@ import {
   Year,
 } from './MovieTile.styled';
 import { MovieImage } from '../../App.styled';
+import { Link } from 'react-router-dom';
 
 interface MovieTileProps {
   movie: Movie;
@@ -70,12 +71,11 @@ export function MovieTile({
           </ContextMenuButton>
         )}
       </ContextMenu>
+      <Link to={`/${movie.id}`}>
+        {' '}
+        <MovieImage alt={movie.name} src={movie.imageUrl} />
+      </Link>
 
-      <MovieImage
-        alt={movie.name}
-        onClick={handleMovieClick}
-        src={movie.imageUrl}
-      />
       <MovieInfo>
         <Title> {movie.name} </Title>
         <Year> {movie.releaseDate.getFullYear()} </Year>
