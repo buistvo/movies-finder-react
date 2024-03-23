@@ -14,9 +14,7 @@ import {
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
 import { DialogContent, ConfirmButton } from '../Dialog/Dialog.styled';
-import { MovieDetails } from '../MovieDetails/MovieDetails';
 import { MovieForm } from '../MovieForm/MovieForm';
-import { SearchForm } from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
 import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
@@ -33,13 +31,11 @@ export function MovieListPage() {
     null
   );
   const [showDialog, setShowDialog] = useState(false);
-  const [query, setQuery] = useState(searchParams.get('query'));
   const [genre, setGenre] = useState(searchParams.get('genre'));
   const [sortBy, setSortBy] = useState<keyof MoviesResponse>(
     searchParams.get('sortBy') as keyof MoviesResponse
   );
   const [movieList, setMovieList] = useState<Movie[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movie>();
   const [total, setTotal] = useState<number>();
 
   const fetchData = async (params?: MovieQueryParams) => {
@@ -65,22 +61,24 @@ export function MovieListPage() {
   });
 
   useEffect(() => {
+    const query = searchParams.get('query');
     const params = {
       ...(query?.length && { query }),
       ...(genre?.length && { genre }),
       ...(sortBy?.length && { sortBy }),
     };
     setSearchParams(params);
-  }, [query, genre, sortBy]);
+  }, [genre, sortBy]);
 
   useEffect(() => {
+    const query = searchParams.get('query');
     fetchData({
       search: query || genre,
       searchBy: query ? 'title' : 'genres',
       sortBy: sortBy,
       sortOrder: 'asc',
     });
-  }, [query, genre, sortBy]);
+  }, [searchParams]);
 
   function handleMovieEdit(movie: Movie) {
     setDialogContent({
