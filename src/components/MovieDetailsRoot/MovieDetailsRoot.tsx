@@ -10,7 +10,7 @@ import {
 } from './MovieDetailsRoot.styled';
 import SearchLogoIcon from '/images/svg/magnifying-glass-svgrepo-com.svg';
 import { useLoaderData } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export async function movieDetailsLoader({
   params,
@@ -22,13 +22,16 @@ export async function movieDetailsLoader({
 }
 
 export function MovieDetailsRoot() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const linkUrl = `/?${searchParams.toString()}`;
   const { movie } = useLoaderData() as { movie: Movie };
 
   return (
     <DetailsContainer>
       <TopContainerHeader>
         <AppLogo />{' '}
-        <Link to="/">
+        <Link to={linkUrl}>
           <SearchSwitcherButton>
             <Icon src={SearchLogoIcon} />
           </SearchSwitcherButton>{' '}

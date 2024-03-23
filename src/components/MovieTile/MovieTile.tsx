@@ -14,24 +14,20 @@ import {
   Year,
 } from './MovieTile.styled';
 import { MovieImage } from '../../App.styled';
-import { Link } from 'react-router-dom';
-
+import { Link, useLocation } from 'react-router-dom';
 interface MovieTileProps {
   movie: Movie;
-  onClick?: (movie: Movie) => void;
   onEdit?: (movie: Movie) => void;
   onDelete?: (movie: Movie) => void;
 }
 
 const StyledEllipsis = () => <Ellipsis>&#x2026;</Ellipsis>;
 
-export function MovieTile({
-  movie,
-  onClick,
-  onDelete,
-  onEdit,
-}: MovieTileProps) {
+export function MovieTile({ movie, onDelete, onEdit }: MovieTileProps) {
   const [isContextMenuOpenState, setIsContextMenuOpenState] = useState(false);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const linkUrl = `/${movie.id}?${searchParams.toString()}`;
 
   function handleContextMenuClick() {
     setIsContextMenuOpenState(!isContextMenuOpenState);
@@ -43,10 +39,6 @@ export function MovieTile({
 
   function handleDeleteClick() {
     if (onDelete) onDelete(movie);
-  }
-
-  function handleMovieClick() {
-    if (onClick) onClick(movie);
   }
 
   return (
@@ -71,7 +63,7 @@ export function MovieTile({
           </ContextMenuButton>
         )}
       </ContextMenu>
-      <Link to={`/${movie.id}`}>
+      <Link to={linkUrl}>
         {' '}
         <MovieImage alt={movie.name} src={movie.imageUrl} />
       </Link>
