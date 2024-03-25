@@ -1,5 +1,6 @@
 import { SortControl } from '../components/SortControl/SortControl';
 import type { Meta, StoryObj } from '@storybook/react';
+import { SORT_OPTIONS } from '../constants/sort-options';
 
 const meta = {
   title: 'SortControl',
@@ -15,6 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const InitialState: Story = {
   args: {
-    sortList: ['Release Date', 'Title'],
+    sortList: SORT_OPTIONS,
+    initialValue: SORT_OPTIONS[0].field,
   },
 };

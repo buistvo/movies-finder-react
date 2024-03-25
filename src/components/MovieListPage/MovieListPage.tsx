@@ -1,4 +1,4 @@
-import { GENRE_LIST } from '../../constants/genre-list-options';
+import { GENRE_LIST_OPTIONS } from '../../constants/genre-list-options';
 import { GenreSelect } from '../GenreSelect/GenreSelect';
 import { MovieTile } from '../MovieTile/MovieTile';
 import { SortControl } from '../SortControl/SortControl';
@@ -87,7 +87,7 @@ export function MovieListPage() {
       children: (
         <MovieForm
           movie={movie}
-          onSubmit={(mov) => {
+          onSubmit={() => {
             setShowDialog(false);
           }}
         ></MovieForm>
@@ -116,7 +116,7 @@ export function MovieListPage() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
-          onSubmit={(mov) => {
+          onSubmit={() => {
             setShowDialog(false);
           }}
         ></MovieForm>
@@ -135,7 +135,7 @@ export function MovieListPage() {
         <DetailsHeader>
           <GenreSelect
             initialSelectedGenre={genre || ''}
-            genreList={GENRE_LIST}
+            genreList={GENRE_LIST_OPTIONS}
             onSelect={setGenre}
           />
           <SortControl

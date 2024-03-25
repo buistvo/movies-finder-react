@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { SearchForm } from '../SearchForm';
 
 describe('SearchForm component', () => {
-  const placeHolderText = 'What do you want to search?';
+  const placeHolderText = 'What do you want to watch?';
   it('renders an input with the value equal to initial value passed in props', () => {
     const initialValue = 'initial value';
     render(<SearchForm initialValue={initialValue} onSearch={() => {}} />);

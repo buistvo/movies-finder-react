@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MovieTile } from '../components/MovieTile/MovieTile';
 import { MOVIE_MOCK } from '../mocks/movie';
+import { MemoryRouter } from 'react-router-dom';
 
 const meta = {
   title: 'MovieTile',
@@ -18,4 +19,11 @@ export const InitialState: Story = {
   args: {
     movie: MOVIE_MOCK,
   },
+  decorators: [
+    (StoryComponent) => (
+      <MemoryRouter>
+        <StoryComponent />
+      </MemoryRouter>
+    ),
+  ],
 };
