@@ -111,20 +111,6 @@ export function MovieListPage() {
     setShowDialog(true);
   }
 
-  function handleAddMovie() {
-    setDialogContent({
-      title: 'EDIT MOVIE',
-      children: (
-        <MovieForm
-          onSubmit={() => {
-            setShowDialog(false);
-          }}
-        ></MovieForm>
-      ),
-    });
-    setShowDialog(true);
-  }
-
   return (
     <MovieListPageContainer>
       <TopContainer>
