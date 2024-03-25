@@ -1,4 +1,4 @@
-import { GENRE_LIST } from '../../constants/genre-list-options';
+import { GENRE_LIST_OPTIONS } from '../../constants/genre-list-options';
 import { GenreSelect } from '../GenreSelect/GenreSelect';
 import { MovieTile } from '../MovieTile/MovieTile';
 import { SortControl } from '../SortControl/SortControl';
@@ -156,7 +156,7 @@ export function MovieListPage() {
 
       <MoviesContainer>
         <DetailsHeader>
-          <GenreSelect genreList={GENRE_LIST} onSelect={setGenre} />
+          <GenreSelect genreList={GENRE_LIST_OPTIONS} onSelect={setGenre} />
           <SortControl
             sortList={SORT_OPTIONS}
             onSortChange={setSort}
