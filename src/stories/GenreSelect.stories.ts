@@ -23,6 +23,6 @@ export const NoInitialValue: Story = {
 export const WithInitialValue: Story = {
   args: {
     genreList: GENRE_LIST,
-    initialSelectedGenre: 'COMEDY',
+    initialSelectedGenre: GENRE_LIST[2].value,
   },
 };

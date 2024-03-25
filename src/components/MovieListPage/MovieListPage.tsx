@@ -88,7 +88,7 @@ export function MovieListPage() {
       children: (
         <MovieForm
           movie={movie}
-          onSubmit={(mov) => {
+          onSubmit={() => {
             setShowDialog(false);
           }}
         ></MovieForm>
@@ -117,7 +117,7 @@ export function MovieListPage() {
       title: 'EDIT MOVIE',
       children: (
         <MovieForm
-          onSubmit={(mov) => {
+          onSubmit={() => {
             setShowDialog(false);
           }}
         ></MovieForm>
