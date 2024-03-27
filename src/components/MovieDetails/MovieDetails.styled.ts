@@ -4,7 +4,6 @@ import { Colors } from '../../Colors';
 export const MovieDetailsContainer = styled.div`
   display: flex;
 `;
-export const ImageContainer = styled.div``;
 export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;

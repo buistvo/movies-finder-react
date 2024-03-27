@@ -11,27 +11,9 @@ export const ButtonRed = styled.button`
   }
 `;
 
-export const MoviesContainer = styled.div`
-  background-color: ${Colors.Workspace};
-  padding: 2rem;
-`;
-
-export const DetailsContainer = styled.div`
-  background-color: ${Colors.Workspace};
-  padding: 2rem;
-`;
-
-export const DetailsHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: grey;
-  }
+export const MovieImage = styled.img`
+  min-width: 250px;
+  min-height: 350px;
+  width: 250px;
+  height: 350px;
 `;

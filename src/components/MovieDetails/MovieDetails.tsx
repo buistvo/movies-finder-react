@@ -1,7 +1,8 @@
+import { MovieImage } from '../../App.styled';
+import { convertDuration } from '../../helpers/duration-converter';
 import { Movie } from '../../types/movie';
 import {
   MovieDetailsContainer,
-  ImageContainer,
   InfoContainer,
   InfoHeader,
   Rating,
@@ -26,9 +27,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
   } = movie;
   return (
     <MovieDetailsContainer>
-      <ImageContainer>
-        <img alt={name} src={imageUrl} />
-      </ImageContainer>
+      <MovieImage alt={name} src={imageUrl} />
       <InfoContainer>
         <InfoHeader>
           {name} <Rating>{rating}</Rating>
@@ -36,7 +35,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         <Genre>{genreList.join(', ')}</Genre>
         <AdditionalInfo>
           <span> {releaseDate?.getFullYear()}</span>
-          <span>{duration}</span>
+          <span>{convertDuration(duration)}</span>
         </AdditionalInfo>
         <Description>{description}</Description>
       </InfoContainer>

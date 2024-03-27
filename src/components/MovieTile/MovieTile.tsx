@@ -13,6 +13,7 @@ import {
   Title,
   Year,
 } from './MovieTile.styled';
+import { MovieImage } from '../../App.styled';
 
 interface MovieTileProps {
   movie: Movie;
@@ -70,7 +71,11 @@ export function MovieTile({
         )}
       </ContextMenu>
 
-      <img alt={movie.name} onClick={handleMovieClick} src={movie.imageUrl} />
+      <MovieImage
+        alt={movie.name}
+        onClick={handleMovieClick}
+        src={movie.imageUrl}
+      />
       <MovieInfo>
         <Title> {movie.name} </Title>
         <Year> {movie.releaseDate.getFullYear()} </Year>

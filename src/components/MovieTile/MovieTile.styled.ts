@@ -7,6 +7,7 @@ export const Container = styled.div`
   height: fit-content;
   position: relative;
   color: ${Colors.SecondaryText};
+  margin: 1.5rem;
 `;
 
 export const MovieInfo = styled.div`
@@ -29,7 +30,7 @@ export const Year = styled.span`
 export const GenreList = styled.div`
   text-align: start;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 300;
 `;
 
 export const ContextMenu = styled.div`
