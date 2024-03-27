@@ -26,7 +26,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
     duration,
   } = movie;
   return (
-    <MovieDetailsContainer>
+    <MovieDetailsContainer data-testid="movie-details-container">
       <MovieImage alt={name} src={imageUrl} />
       <InfoContainer>
         <InfoHeader>

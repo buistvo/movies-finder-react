@@ -17,5 +17,6 @@ type Story = StoryObj<typeof meta>;
 export const InitialState: Story = {
   args: {
     sortList: SORT_OPTIONS,
+    initialValue: SORT_OPTIONS[0].field,
   },
 };

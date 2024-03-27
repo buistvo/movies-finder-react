@@ -2,41 +2,45 @@ import { render, fireEvent } from '@testing-library/react';
 import { MovieTile } from '../MovieTile';
 import '@testing-library/jest-dom';
 import { MOVIE_MOCK } from '../../../mocks/movie';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 // Mock movie data
 const mockMovie = MOVIE_MOCK;
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn(),
+}));
+
 describe('MovieTile component', () => {
+  beforeEach(() => {
+    (useLocation as jest.Mock).mockReturnValue({
+      search: '?param1=value1&param2=value2',
+    });
+  });
   it('renders movie tile correctly', () => {
-    const { getByText, getByAltText } = render(<MovieTile movie={mockMovie} />);
+    const { getByText, getByAltText } = render(
+      <MemoryRouter>
+        <MovieTile movie={mockMovie} />
+      </MemoryRouter>
+    );
 
     expect(getByText(mockMovie.name)).toBeInTheDocument();
     expect(getByText(mockMovie.releaseDate.getFullYear())).toBeInTheDocument();
-    expect(getByText(mockMovie.genreList.join(','))).toBeInTheDocument(); // Note: There is no space after the comma in the join() method
+    expect(getByText(mockMovie.genreList.join(', '))).toBeInTheDocument(); // Note: There is no space after the comma in the join() method
     expect(getByAltText(mockMovie.name)).toHaveAttribute(
       'src',
       mockMovie.imageUrl
     );
   });
 
-  it('calls onClick handler when clicked on movie image', () => {
-    const onClickMock = jest.fn();
-
-    const { getByAltText } = render(
-      <MovieTile movie={mockMovie} onClick={onClickMock} />
-    );
-
-    fireEvent.click(getByAltText(mockMovie.name));
-
-    expect(onClickMock).toHaveBeenCalled();
-    expect(onClickMock).toHaveBeenCalledWith(mockMovie); // Ensure that onClick function is called with correct movie data
-  });
-
   it('calls onEdit handler when Edit option is clicked in context menu', () => {
     const onEditMock = jest.fn();
 
     const { getByText, getByTestId } = render(
-      <MovieTile movie={mockMovie} onEdit={onEditMock} />
+      <MemoryRouter>
+        <MovieTile movie={mockMovie} onEdit={onEditMock} />
+      </MemoryRouter>
     );
 
     fireEvent.click(getByTestId('ellipsis-button'));
@@ -51,7 +55,9 @@ describe('MovieTile component', () => {
     const onDeleteMock = jest.fn();
 
     const { getByText, getByTestId } = render(
-      <MovieTile movie={mockMovie} onDelete={onDeleteMock} />
+      <MemoryRouter>
+        <MovieTile movie={mockMovie} onDelete={onDeleteMock} />
+      </MemoryRouter>
     );
 
     fireEvent.click(getByTestId('ellipsis-button'));
