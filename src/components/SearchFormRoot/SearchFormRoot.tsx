@@ -8,7 +8,6 @@ import {
 import { TopContainerHeader } from '../MovieListPage/MovieListPage.styled';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { Dialog } from '../Dialog/Dialog';
 
 export function SearchFormRoot() {
   const [searchParams, setSearchParams] = useSearchParams();
