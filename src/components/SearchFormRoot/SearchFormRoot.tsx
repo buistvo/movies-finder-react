@@ -7,11 +7,13 @@ import {
 } from './SearchFormRoot.styled';
 import { TopContainerHeader } from '../MovieListPage/MovieListPage.styled';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { Dialog } from '../Dialog/Dialog';
 
 export function SearchFormRoot() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentParams = searchParams.toString(); // Get current search params
@@ -28,11 +30,14 @@ export function SearchFormRoot() {
     <ContainerWithBackground>
       <TopContainerHeader>
         <AppLogo />
-        <AddMovieButton>+ ADD MOVIE</AddMovieButton>
+        <AddMovieButton onClick={() => navigate('/new')}>
+          + ADD MOVIE
+        </AddMovieButton>
       </TopContainerHeader>
       <SearchMovieContent>
         <SearchForm initialValue={query || ''} onSearch={setQuery}></SearchForm>
       </SearchMovieContent>
+      <Outlet />
     </ContainerWithBackground>
   );
 }

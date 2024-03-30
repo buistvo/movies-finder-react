@@ -30,11 +30,11 @@ export function MovieDetailsRoot() {
   return (
     <DetailsContainer>
       <TopContainerHeader>
-        <AppLogo />{' '}
+        <AppLogo />
         <Link to={linkUrl}>
           <SearchSwitcherButton>
             <Icon src={SearchLogoIcon} />
-          </SearchSwitcherButton>{' '}
+          </SearchSwitcherButton>
         </Link>
       </TopContainerHeader>
       <MovieDetails movie={movie} />
