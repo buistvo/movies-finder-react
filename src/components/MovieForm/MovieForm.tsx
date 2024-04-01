@@ -13,6 +13,7 @@ import {
 import Select from 'react-select';
 import { CustomStyles } from '../../config/react-select.config';
 import { GENRE_LIST_OPTIONS } from '../../constants/genre-list-options';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 export type DropdownOption = { value: string; label: string };
 interface MovieFormProps {
@@ -53,71 +54,89 @@ export function MovieForm(props: MovieFormProps) {
     duration,
   } = movie;
 
-  function handleReset() {
-    setMovie(initialMovie || new Movie());
-  }
+  const { register, handleSubmit, reset, control } = useForm<Movie>();
 
-  function handleSubmit(event: SyntheticEvent) {
-    const fd = new FormData(event.target as HTMLFormElement);
-    const obj = Object.fromEntries(
-      Array.from(fd.keys(), (key) => {
-        const val = fd.getAll(key);
-        return [key, val.length > 1 ? val : val.pop()];
-      })
-    ) as unknown as Movie;
-    event.preventDefault();
-    onSubmit(obj);
+  function handleReset() {
+    reset(initialMovie);
   }
+  const onSubmitHandler: SubmitHandler<Movie> = (data) => {
+    onSubmit({
+      ...data,
+      duration: +data.duration,
+      releaseDate: new Date(data.releaseDate),
+      rating: data.rating ? +data.rating : 0,
+    });
+  };
 
   return (
-    <FormContainer onSubmit={handleSubmit}>
+    <FormContainer onSubmit={handleSubmit(onSubmitHandler)}>
       <LabeledInput label={'TITLE'}>
-        <Input name="name" defaultValue={name} placeholder={'Enter title'} />
+        <Input
+          defaultValue={name}
+          placeholder={'Enter title'}
+          {...register('name')}
+          required={true}
+        />
       </LabeledInput>
       <LabeledInput label={'RELEASE DATE'}>
         <Input
           type="date"
-          name="releaseDate"
           defaultValue={releaseDate.toISOString().slice(0, 10)}
           placeholder={'Select Date'}
+          {...register('releaseDate')}
+          required={true}
         />
       </LabeledInput>
       <LabeledInput label={'MOVIE URL'}>
         <Input
-          name="imageUrl"
           defaultValue={imageUrl}
           placeholder={'https://'}
+          {...register('imageUrl')}
+          required={true}
         />
       </LabeledInput>
       <LabeledInput label={'RATING'}>
         <Input
-          name="rating"
           type="number"
           defaultValue={rating || 0}
           placeholder={'7.8'}
+          {...register('rating')}
+          required={true}
         />
       </LabeledInput>
       <LabeledInput label={'GENRE'}>
-        <Select
+        <Controller
           name="genreList"
-          isMulti={true}
-          styles={CustomStyles}
-          options={GENRE_LIST_OPTIONS}
-          defaultValue={genreList.map((g) => ({ label: g, value: g }))}
-        />
+          control={control}
+          defaultValue={genreList}
+          render={({ field }) => (
+            <Select
+              isMulti={true}
+              styles={CustomStyles}
+              options={GENRE_LIST_OPTIONS.filter((g) => g.value)}
+              onChange={(val) => field.onChange(val.map((v) => v.value))}
+              value={GENRE_LIST_OPTIONS.filter((g) =>
+                field.value.some((f) => g.value === f)
+              )}
+            />
+          )}
+        ></Controller>
       </LabeledInput>
       <LabeledInput label={'RUNTIME'}>
         <Input
-          name="duration"
           defaultValue={duration}
           placeholder={'minutes'}
+          {...register('duration')}
+          type="number"
+          min={1}
+          required={true}
         />
       </LabeledInput>
       <LabeledInputDescription fullRow={true} label={'OVERVIEW'}>
         <DescriptionInput
-          name="description"
           defaultValue={description}
           placeholder={'Movie description'}
+          {...register('description')}
         />
       </LabeledInputDescription>
       <Footer>
