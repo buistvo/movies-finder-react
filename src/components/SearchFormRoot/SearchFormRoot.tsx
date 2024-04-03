@@ -13,6 +13,7 @@ export function SearchFormRoot() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query'));
   const navigate = useNavigate();
+  const searchParamsUrl = `${searchParams.toString()}`;
 
   useEffect(() => {
     const currentParams = searchParams.toString(); // Get current search params
@@ -29,7 +30,7 @@ export function SearchFormRoot() {
     <ContainerWithBackground>
       <TopContainerHeader>
         <AppLogo />
-        <AddMovieButton onClick={() => navigate('/new')}>
+        <AddMovieButton onClick={() => navigate(`/new?${searchParamsUrl}`)}>
           + ADD MOVIE
         </AddMovieButton>
       </TopContainerHeader>
