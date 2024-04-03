@@ -55,7 +55,6 @@ const LabeledInputDescription = ({
 
 export function MovieForm(props: MovieFormProps) {
   const { movie: initialMovie, onSubmit } = props;
-  const [movie, setMovie] = useState(initialMovie || new Movie());
   const {
     name,
     description,
@@ -64,7 +63,7 @@ export function MovieForm(props: MovieFormProps) {
     genreList,
     releaseDate,
     duration,
-  } = movie;
+  } = initialMovie || new Movie();
 
   const {
     register,
@@ -83,6 +82,7 @@ export function MovieForm(props: MovieFormProps) {
       duration: +data.duration,
       releaseDate: new Date(data.releaseDate),
       rating: data.rating ? +data.rating : 0,
+      id: initialMovie?.id || 0,
     });
   };
 

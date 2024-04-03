@@ -48,6 +48,20 @@ export class MoviesService {
     return this.mapResponse(response.data);
   }
 
+  async update(
+    movie: Movie,
+    cancellationToken?: CancelTokenSource
+  ): Promise<Movie> {
+    const response = await axios.put<MoviesResponse>(
+      `http://localhost:4000/movies/`,
+      {
+        cancelToken: cancellationToken?.token,
+        ...this.mapToRequest(movie),
+      }
+    );
+    return this.mapResponse(response.data);
+  }
+
   mapResponse(response: MoviesResponse): Movie {
     return {
       id: response.id || 0,

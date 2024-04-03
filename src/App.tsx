@@ -8,6 +8,7 @@ import {
 } from './components/MovieDetailsRoot/MovieDetailsRoot';
 import { SearchFormRoot } from './components/SearchFormRoot/SearchFormRoot';
 import { AddMovieForm } from './components/AddMovieForm/AddMovieForm';
+import { EditMovieForm } from './components/EditMovieForm/EditMovieForm';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'new',
-            element: <AddMovieForm></AddMovieForm>,
+            element: <AddMovieForm />,
           },
         ],
       },
@@ -27,6 +28,13 @@ const router = createBrowserRouter([
         path: '/:movieId',
         element: <MovieDetailsRoot />,
         loader: movieDetailsLoader,
+        children: [
+          {
+            path: 'edit',
+            element: <EditMovieForm />,
+            loader: movieDetailsLoader,
+          },
+        ],
       },
     ],
   },

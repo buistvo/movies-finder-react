@@ -23,9 +23,13 @@ import { SORT_OPTIONS } from '../../constants/sort-options';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { AppLogo } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 export function MovieListPage() {
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamsUrl = `?${searchParams.toString()}`;
 
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
@@ -135,7 +139,9 @@ export function MovieListPage() {
           {movieList.map((movie, index) => (
             <MovieTile
               key={movie.name + index}
-              onEdit={handleMovieEdit}
+              onEdit={(movie) =>
+                navigate(`/${movie.id}/edit${searchParamsUrl}`)
+              }
               onDelete={handleMovieDeleteClick}
               movie={movie}
             ></MovieTile>
