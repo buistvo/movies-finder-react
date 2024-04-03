@@ -11,7 +11,7 @@ export const AddMovieButton = styled.button`
 export const ContainerWithBackground = styled.div`
   position: relative;
   background: no-repeat center center;
-  background-image: url('images/literally-me.jpg');
+  background-image: URL('../images/literally-me.jpg');
   background-repeat: repeat;
   background-position: top;
   background-repeat: repeat;
