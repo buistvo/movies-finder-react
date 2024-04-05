@@ -5,51 +5,39 @@ import { SortControl } from '../SortControl/SortControl';
 import {
   MoviesContainer,
   DetailsHeader,
-  DetailsContainer,
-  AddMovieButton,
-  Logo,
   MovieListPageContainer,
   MovieListPageFooter,
   MoviesTotal,
-  SearchMovieContainer,
-  SearchMovieContent,
-  TopContainerHeader,
   TopContainer,
   MoviesGrid,
-  SearchSwitcherButton,
-  Icon,
 } from './MovieListPage.styled';
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
 import { DialogContent, ConfirmButton } from '../Dialog/Dialog.styled';
-import { MovieDetails } from '../MovieDetails/MovieDetails';
 import { MovieForm } from '../MovieForm/MovieForm';
-import { SearchForm } from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
 import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
 import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
-import SearchLogoIcon from '/images/svg/magnifying-glass-svgrepo-com.svg';
-
-const AppLogo = () => (
-  <Logo>
-    <span>netflix</span>
-    <span>roulette</span>
-  </Logo>
-);
+import { useSearchParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { AppLogo } from '../AppLogo/AppLogo';
 
 export function MovieListPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
   );
   const [showDialog, setShowDialog] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [genre, setGenre] = useState('');
-  const [sort, setSort] = useState<keyof MoviesResponse>();
+  const [genre, setGenre] = useState(searchParams.get('genre'));
+  const [sortBy, setSortBy] = useState<keyof MoviesResponse>(
+    searchParams.get('sortBy') as keyof MoviesResponse
+  );
   const [movieList, setMovieList] = useState<Movie[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movie>();
   const [total, setTotal] = useState<number>();
+  const query = searchParams.get('query');
 
   const fetchData = async (params?: MovieQueryParams) => {
     try {
@@ -59,7 +47,7 @@ export function MovieListPage() {
       }
       const source = axios.CancelToken.source();
       setCancelSource(source);
-      const result = await new MoviesService().get(params, source);
+      const result = await new MoviesService().getAll(params, source);
       setCancelSource(null);
       setMovieList(result.data);
       setTotal(result.totalAmount);
@@ -74,13 +62,23 @@ export function MovieListPage() {
   });
 
   useEffect(() => {
+    const params = {
+      ...(query?.length && { query }),
+      ...(genre?.length && { genre: genre.toLowerCase() }),
+      ...(sortBy?.length && { sortBy }),
+    };
+    setSearchParams(params);
+  }, [genre, sortBy]);
+
+  useEffect(() => {
     fetchData({
-      search: searchTerm || genre,
-      searchBy: searchTerm ? 'title' : 'genres',
-      sortBy: sort,
+      search: query,
+      searchBy: 'title',
+      sortBy: sortBy,
       sortOrder: 'asc',
+      filter: genre,
     });
-  }, [searchTerm, genre, sort]);
+  }, [searchParams]);
 
   function handleMovieEdit(movie: Movie) {
     setDialogContent({
@@ -112,54 +110,23 @@ export function MovieListPage() {
     setShowDialog(true);
   }
 
-  function handleAddMovie() {
-    setDialogContent({
-      title: 'EDIT MOVIE',
-      children: (
-        <MovieForm
-          onSubmit={() => {
-            setShowDialog(false);
-          }}
-        ></MovieForm>
-      ),
-    });
-    setShowDialog(true);
-  }
-
   return (
     <MovieListPageContainer>
       <TopContainer>
-        {selectedMovie ? (
-          <DetailsContainer>
-            <TopContainerHeader>
-              <AppLogo />
-              <SearchSwitcherButton onClick={() => setSelectedMovie(undefined)}>
-                <Icon src={SearchLogoIcon} />
-              </SearchSwitcherButton>
-            </TopContainerHeader>
-            <MovieDetails movie={selectedMovie}></MovieDetails>
-          </DetailsContainer>
-        ) : (
-          <SearchMovieContainer>
-            <TopContainerHeader>
-              <AppLogo />
-              <AddMovieButton onClick={handleAddMovie}>
-                + ADD MOVIE
-              </AddMovieButton>
-            </TopContainerHeader>
-            <SearchMovieContent>
-              <SearchForm initialValue={searchTerm} onSearch={setSearchTerm} />
-            </SearchMovieContent>
-          </SearchMovieContainer>
-        )}
+        <Outlet />
       </TopContainer>
 
       <MoviesContainer>
         <DetailsHeader>
-          <GenreSelect genreList={GENRE_LIST_OPTIONS} onSelect={setGenre} />
+          <GenreSelect
+            initialSelectedGenre={genre || ''}
+            genreList={GENRE_LIST_OPTIONS}
+            onSelect={setGenre}
+          />
           <SortControl
+            initialValue={sortBy}
             sortList={SORT_OPTIONS}
-            onSortChange={setSort}
+            onSortChange={setSortBy}
           ></SortControl>
         </DetailsHeader>
         <MoviesTotal>{total} MOVIES FOUND</MoviesTotal>
@@ -169,7 +136,6 @@ export function MovieListPage() {
               key={movie.name + index}
               onEdit={handleMovieEdit}
               onDelete={handleMovieDeleteClick}
-              onClick={setSelectedMovie}
               movie={movie}
             ></MovieTile>
           ))}

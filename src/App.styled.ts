@@ -17,3 +17,8 @@ export const MovieImage = styled.img`
   width: 250px;
   height: 350px;
 `;
+
+export const Icon = styled.img`
+  width: 30px;
+  height: 30px;
+`;

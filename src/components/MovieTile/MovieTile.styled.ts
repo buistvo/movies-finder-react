@@ -8,6 +8,7 @@ export const Container = styled.div`
   position: relative;
   color: ${Colors.SecondaryText};
   margin: 1.5rem;
+  width: 250px;
 `;
 
 export const MovieInfo = styled.div`
@@ -25,6 +26,7 @@ export const Year = styled.span`
   border: 1px solid ${Colors.Background};
   border-radius: 5px;
   width: 20%;
+  height: fit-content;
 `;
 
 export const GenreList = styled.div`

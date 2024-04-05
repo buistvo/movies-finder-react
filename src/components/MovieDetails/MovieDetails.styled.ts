@@ -23,6 +23,8 @@ export const Rating = styled.span`
   margin-left: 1rem;
   border: 1px solid ${Colors.SecondaryText};
   border-radius: 50px;
+  display: inline-block;
+  width: 30px;
 `;
 
 export const Genre = styled.span`

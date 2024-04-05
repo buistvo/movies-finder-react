@@ -7,7 +7,12 @@ const mockSortList = SORT_OPTIONS;
 
 describe('SortControl component', () => {
   it('renders sort options correctly', () => {
-    const { getByText } = render(<SortControl sortList={mockSortList} />);
+    const { getByText } = render(
+      <SortControl
+        sortList={mockSortList}
+        initialValue={mockSortList[0].field}
+      />
+    );
 
     for (const option of mockSortList) {
       expect(getByText(option.label)).toBeInTheDocument();
@@ -18,7 +23,11 @@ describe('SortControl component', () => {
     const onSortChangeMock = jest.fn();
     const selectedOption = mockSortList[1].field;
     const { getByTestId } = render(
-      <SortControl sortList={mockSortList} onSortChange={onSortChangeMock} />
+      <SortControl
+        initialValue={mockSortList[0].field}
+        sortList={mockSortList}
+        onSortChange={onSortChangeMock}
+      />
     );
 
     fireEvent.change(getByTestId('sort-select'), {

@@ -14,7 +14,7 @@ export function GenreSelect({
   onSelect,
 }: InitialProps) {
   const [selectedGenre, setSelectedGenre] = useState(
-    initialSelectedGenre || genreList[0]
+    initialSelectedGenre || genreList[0].value
   );
 
   function handleGenreButtonClick(genre: string) {
@@ -26,8 +26,13 @@ export function GenreSelect({
     <div className="genre-list">
       {genreList.map((genre) => (
         <button
+          data-testid={genre.value}
           key={genre.value}
-          className={selectedGenre === genre.value ? 'selected' : ''}
+          className={
+            selectedGenre.toLowerCase() === genre.value.toLowerCase()
+              ? 'selected'
+              : ''
+          }
           onClick={() => handleGenreButtonClick(genre.value)}
         >
           {genre.label}

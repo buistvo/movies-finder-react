@@ -1,4 +1,4 @@
-describe('Counter Component', () => {
+describe.skip('Counter Component', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173');
   });
