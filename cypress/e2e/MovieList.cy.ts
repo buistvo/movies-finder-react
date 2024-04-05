@@ -11,7 +11,7 @@ describe('MovieListPage', () => {
 
   it('updates query params when selecting genre', () => {
     cy.get('[data-testid=Comedy]').click();
-    cy.url().should('include', 'genre=Comedy');
+    cy.url().should('include', 'genre=comedy');
   });
 
   it('updates query params when sorting', () => {
