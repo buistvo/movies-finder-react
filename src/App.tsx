@@ -1,7 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import { MovieListPage } from './components/MovieListPage/MovieListPage';
-import { Logo } from './App.styled';
 import {
   MovieDetailsRoot,
   movieDetailsLoader,
