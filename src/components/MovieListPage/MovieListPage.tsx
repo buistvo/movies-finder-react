@@ -64,7 +64,7 @@ export function MovieListPage() {
   useEffect(() => {
     const params = {
       ...(query?.length && { query }),
-      ...(genre?.length && { genre }),
+      ...(genre?.length && { genre: genre.toLowerCase() }),
       ...(sortBy?.length && { sortBy }),
     };
     setSearchParams(params);
