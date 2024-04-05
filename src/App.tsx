@@ -27,11 +27,11 @@ const router = createBrowserRouter([
         path: '/:movieId',
         element: <MovieDetailsRoot />,
         loader: movieDetailsLoader,
+        id: 'movie',
         children: [
           {
             path: 'edit',
             element: <EditMovieForm />,
-            loader: movieDetailsLoader,
           },
         ],
       },
