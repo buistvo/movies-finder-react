@@ -1,7 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import { MovieListPage } from './components/MovieListPage/MovieListPage';
-import { Logo } from './App.styled';
 import {
   MovieDetailsRoot,
   movieDetailsLoader,
@@ -39,13 +38,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-export const AppLogo = () => (
-  <Logo>
-    <span>netflix</span>
-    <span>roulette</span>
-  </Logo>
-);
 
 function App() {
   return <RouterProvider router={router} />;

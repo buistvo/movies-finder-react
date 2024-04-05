@@ -1,7 +1,7 @@
-import { AppLogo } from '../../App';
 import { Icon } from '../../App.styled';
 import { MoviesService } from '../../services/movies.service';
 import { Movie } from '../../types/movie';
+import { AppLogo } from '../AppLogo/AppLogo';
 import { MovieDetails } from '../MovieDetails/MovieDetails';
 import { TopContainerHeader } from '../MovieListPage/MovieListPage.styled';
 import {

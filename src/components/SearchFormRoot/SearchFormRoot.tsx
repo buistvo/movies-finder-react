@@ -1,5 +1,4 @@
 import { SearchForm } from '../SearchForm/SearchForm';
-import { AppLogo } from '../../App';
 import {
   ContainerWithBackground,
   AddMovieButton,
@@ -8,6 +7,7 @@ import {
 import { TopContainerHeader } from '../MovieListPage/MovieListPage.styled';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { AppLogo } from '../AppLogo/AppLogo';
 
 export function SearchFormRoot() {
   const [searchParams, setSearchParams] = useSearchParams();
