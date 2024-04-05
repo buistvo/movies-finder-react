@@ -22,7 +22,7 @@ import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import { AppLogo } from '../../App';
+import { AppLogo } from '../AppLogo/AppLogo';
 
 export function MovieListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,6 +37,7 @@ export function MovieListPage() {
   );
   const [movieList, setMovieList] = useState<Movie[]>([]);
   const [total, setTotal] = useState<number>();
+  const query = searchParams.get('query');
 
   const fetchData = async (params?: MovieQueryParams) => {
     try {
@@ -61,7 +62,6 @@ export function MovieListPage() {
   });
 
   useEffect(() => {
-    const query = searchParams.get('query');
     const params = {
       ...(query?.length && { query }),
       ...(genre?.length && { genre }),
@@ -71,7 +71,6 @@ export function MovieListPage() {
   }, [genre, sortBy]);
 
   useEffect(() => {
-    const query = searchParams.get('query');
     fetchData({
       search: query,
       searchBy: 'title',
@@ -127,7 +126,7 @@ export function MovieListPage() {
           <SortControl
             initialValue={sortBy}
             sortList={SORT_OPTIONS}
-            onSortChange={(sortOption) => setSortBy(sortOption)}
+            onSortChange={setSortBy}
           ></SortControl>
         </DetailsHeader>
         <MoviesTotal>{total} MOVIES FOUND</MoviesTotal>

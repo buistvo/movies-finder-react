@@ -17,13 +17,6 @@ export const MovieImage = styled.img`
   width: 250px;
   height: 350px;
 `;
-export const Logo = styled.div`
-  color: ${Colors.PrimaryRed};
-  font-size: 1.1em;
-  :first-child {
-    font-weight: 1000;
-  }
-`;
 
 export const Icon = styled.img`
   width: 30px;

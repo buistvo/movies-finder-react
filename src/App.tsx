@@ -7,6 +7,7 @@ import {
   movieDetailsLoader,
 } from './components/MovieDetailsRoot/MovieDetailsRoot';
 import { SearchFormRoot } from './components/SearchFormRoot/SearchFormRoot';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,13 +25,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-export const AppLogo = () => (
-  <Logo>
-    <span>netflix</span>
-    <span>roulette</span>
-  </Logo>
-);
 
 function App() {
   return <RouterProvider router={router} />;
