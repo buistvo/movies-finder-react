@@ -25,6 +25,7 @@ export class MoviesService {
     id: string,
     cancellationToken?: CancelTokenSource
   ): Promise<Movie> {
+    console.log('getById', id);
     const response = await axios.get<MoviesResponse>(
       `http://localhost:4000/movies/${id}`,
       {
