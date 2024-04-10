@@ -1,7 +1,7 @@
 export interface MoviesResponse {
   budget?: number;
   genres: string[];
-  id?: number;
+  id?: number | null;
   overview: string;
   poster_path: string;
   release_date: string;

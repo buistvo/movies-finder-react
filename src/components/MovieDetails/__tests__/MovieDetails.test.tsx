@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { MovieDetails } from '../MovieDetails';
 import { MOVIE_MOCK } from '../../../mocks/movie';
 import { convertDuration } from '../../../helpers/duration-converter';
+import { getFullYear } from '../../../helpers/dates-helper';
 
 const mockMovie = MOVIE_MOCK;
 
@@ -15,7 +16,9 @@ describe('MovieDetails component', () => {
     expect(getByText(mockMovie.name)).toBeInTheDocument();
     expect(getByText(mockMovie.rating!.toString())).toBeInTheDocument();
     expect(getByText(mockMovie.genreList.join(', '))).toBeInTheDocument();
-    expect(getByText(mockMovie.releaseDate.getFullYear())).toBeInTheDocument();
+    expect(
+      getByText(getFullYear(mockMovie.releaseDate).toString())
+    ).toBeInTheDocument();
     expect(getByText(convertDuration(mockMovie.duration))).toBeInTheDocument();
     expect(getByText(mockMovie.description)).toBeInTheDocument();
 

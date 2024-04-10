@@ -3,6 +3,7 @@ import { MovieTile } from '../MovieTile';
 import '@testing-library/jest-dom';
 import { MOVIE_MOCK } from '../../../mocks/movie';
 import { MemoryRouter, useLocation } from 'react-router-dom';
+import { getFullYear } from '../../../helpers/dates-helper';
 
 // Mock movie data
 const mockMovie = MOVIE_MOCK;
@@ -26,7 +27,9 @@ describe('MovieTile component', () => {
     );
 
     expect(getByText(mockMovie.name)).toBeInTheDocument();
-    expect(getByText(mockMovie.releaseDate.getFullYear())).toBeInTheDocument();
+    expect(
+      getByText(getFullYear(mockMovie.releaseDate).toString())
+    ).toBeInTheDocument();
     expect(getByText(mockMovie.genreList.join(', '))).toBeInTheDocument(); // Note: There is no space after the comma in the join() method
     expect(getByAltText(mockMovie.name)).toHaveAttribute(
       'src',

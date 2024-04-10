@@ -1,5 +1,5 @@
-import { ReactNode, useState } from 'react';
-import { Movie } from '../../types/movie';
+import { ReactNode } from 'react';
+import { Movie, MovieFormFields } from '../../types/movie';
 import {
   LabeledInputContainer,
   Label,
@@ -19,10 +19,11 @@ import {
   Controller,
   FieldError,
 } from 'react-hook-form';
+import { INITIAL_MOVIE_FORM_VALUE } from '../../constants/initial-movie-form';
 
 export type DropdownOption = { value: string; label: string };
 interface MovieFormProps {
-  movie?: Movie;
+  movie?: MovieFormFields;
   onSubmit: (movie: Movie) => void;
 }
 
@@ -55,15 +56,6 @@ const LabeledInputDescription = ({
 
 export function MovieForm(props: MovieFormProps) {
   const { movie: initialMovie, onSubmit } = props;
-  const {
-    name,
-    description,
-    imageUrl,
-    rating,
-    genreList,
-    releaseDate,
-    duration,
-  } = initialMovie || new Movie();
 
   const {
     register,
@@ -71,7 +63,12 @@ export function MovieForm(props: MovieFormProps) {
     reset,
     control,
     formState: { errors },
-  } = useForm<Movie>();
+  } = useForm<Movie>({
+    defaultValues: {
+      ...INITIAL_MOVIE_FORM_VALUE,
+      ...initialMovie,
+    },
+  });
 
   function handleReset() {
     reset(initialMovie);
@@ -79,10 +76,10 @@ export function MovieForm(props: MovieFormProps) {
   const onSubmitHandler: SubmitHandler<Movie> = (data) => {
     onSubmit({
       ...data,
-      duration: +data.duration,
-      releaseDate: new Date(data.releaseDate),
-      rating: data.rating ? +data.rating : 0,
-      id: initialMovie?.id || 0,
+      duration: +data.duration!,
+      releaseDate: data.releaseDate,
+      rating: data.rating!,
+      id: initialMovie?.id || null,
     });
   };
 
@@ -92,7 +89,6 @@ export function MovieForm(props: MovieFormProps) {
     <FormContainer onSubmit={handleSubmit(onSubmitHandler)}>
       <LabeledInput label={'TITLE'} error={errors.name}>
         <Input
-          defaultValue={name}
           placeholder={'Enter title'}
           {...register('name', { required: 'Name is required' })}
         />
@@ -100,14 +96,12 @@ export function MovieForm(props: MovieFormProps) {
       <LabeledInput label={'RELEASE DATE'} error={errors.releaseDate}>
         <Input
           type="date"
-          defaultValue={releaseDate.toISOString().slice(0, 10)}
           placeholder={'Select Date'}
           {...register('releaseDate', { required: 'Release date is required' })}
         />
       </LabeledInput>
       <LabeledInput label={'MOVIE URL'} error={errors.imageUrl}>
         <Input
-          defaultValue={imageUrl}
           placeholder={'https://'}
           {...register('imageUrl', {
             required: 'Movie URL is required',
@@ -121,7 +115,7 @@ export function MovieForm(props: MovieFormProps) {
       <LabeledInput label={'RATING'} error={errors.rating}>
         <Input
           type="number"
-          defaultValue={rating || 0}
+          defaultValue={initialMovie?.rating || 0}
           placeholder={'7.8'}
           {...register('rating', {
             min: { value: 0.01, message: 'Rating should be more than 0' },
@@ -135,7 +129,6 @@ export function MovieForm(props: MovieFormProps) {
           name="genreList"
           control={control}
           rules={{ required: 'At least one genre should be selected' }}
-          defaultValue={genreList}
           render={({ field }) => (
             <Select
               isMulti={true}
@@ -143,7 +136,7 @@ export function MovieForm(props: MovieFormProps) {
               options={GENRE_LIST_OPTIONS.filter((g) => g.value)}
               onChange={(val) => field.onChange(val.map((v) => v.value))}
               value={GENRE_LIST_OPTIONS.filter((g) =>
-                field.value.some((f) => g.value === f)
+                field.value?.some((f) => g.value === f)
               )}
             />
           )}
@@ -151,7 +144,6 @@ export function MovieForm(props: MovieFormProps) {
       </LabeledInput>
       <LabeledInput label={'RUNTIME'} error={errors.duration}>
         <Input
-          defaultValue={duration || 90}
           placeholder={'minutes'}
           {...register('duration', {
             min: { value: 1, message: 'Runtime should be more than 1 minute' },
@@ -166,7 +158,6 @@ export function MovieForm(props: MovieFormProps) {
         error={errors.description}
       >
         <DescriptionInput
-          defaultValue={description}
           placeholder={'Movie description'}
           {...register('description', { required: 'Description is required' })}
         />

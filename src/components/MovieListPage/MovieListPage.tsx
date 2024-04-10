@@ -14,7 +14,6 @@ import {
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
 import { DialogContent, ConfirmButton } from '../Dialog/Dialog.styled';
-import { MovieForm } from '../MovieForm/MovieForm';
 import { useEffect, useState } from 'react';
 import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
@@ -84,21 +83,6 @@ export function MovieListPage() {
     });
   }, [searchParams]);
 
-  function handleMovieEdit(movie: Movie) {
-    setDialogContent({
-      title: 'EDIT MOVIE',
-      children: (
-        <MovieForm
-          movie={movie}
-          onSubmit={() => {
-            setShowDialog(false);
-          }}
-        ></MovieForm>
-      ),
-    });
-    setShowDialog(true);
-  }
-
   function handleMovieDeleteClick() {
     setDialogContent({
       title: 'DELETE MOVIE',
@@ -137,7 +121,7 @@ export function MovieListPage() {
         <MoviesGrid>
           {movieList.map((movie, index) => (
             <MovieTile
-              key={movie.name + index}
+              key={movie.name! + index}
               onEdit={(movie) =>
                 navigate(`/${movie.id}/edit${searchParamsUrl}`)
               }

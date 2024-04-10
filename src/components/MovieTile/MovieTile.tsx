@@ -15,6 +15,7 @@ import {
 } from './MovieTile.styled';
 import { MovieImage } from '../../App.styled';
 import { Link, useLocation } from 'react-router-dom';
+import { getFullYear } from '../../helpers/dates-helper';
 interface MovieTileProps {
   movie: Movie;
   onEdit?: (movie: Movie) => void;
@@ -70,7 +71,7 @@ export function MovieTile({ movie, onDelete, onEdit }: MovieTileProps) {
 
       <MovieInfo>
         <Title> {movie.name} </Title>
-        <Year> {movie.releaseDate.getFullYear()} </Year>
+        <Year> {getFullYear(movie.releaseDate)} </Year>
       </MovieInfo>
       <GenreList> {movie.genreList.join(', ')} </GenreList>
     </Container>
