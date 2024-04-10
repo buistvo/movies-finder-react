@@ -35,7 +35,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         </InfoHeader>
         <Genre>{genreList.join(', ')}</Genre>
         <AdditionalInfo>
-          <span> {getFullYear(releaseDate)}</span>
+          <span> {getFullYear(releaseDate).toString()}</span>
           <span>{convertDuration(duration)}</span>
         </AdditionalInfo>
         <Description>{description}</Description>
