@@ -78,8 +78,8 @@ export function MovieForm(props: MovieFormProps) {
       ...data,
       duration: +data.duration!,
       releaseDate: data.releaseDate,
-      rating: data.rating!,
-      id: initialMovie?.id || null,
+      rating: +data.rating!,
+      id: initialMovie?.id,
     });
   };
 
@@ -114,7 +114,6 @@ export function MovieForm(props: MovieFormProps) {
       </LabeledInput>
       <LabeledInput label={'RATING'} error={errors.rating}>
         <Input
-          type="number"
           defaultValue={initialMovie?.rating || 0}
           placeholder={'7.8'}
           {...register('rating', {
@@ -122,6 +121,7 @@ export function MovieForm(props: MovieFormProps) {
             max: { value: 10, message: 'Rating should be less than 10' },
             required: true,
           })}
+          type="number"
         />
       </LabeledInput>
       <LabeledInput label={'GENRE'} error={errors.genreList as FieldError}>

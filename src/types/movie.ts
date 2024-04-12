@@ -1,5 +1,5 @@
 export interface Movie {
-  id: number | null;
+  id?: number;
   imageUrl: string;
   name: string;
   releaseDate: string;

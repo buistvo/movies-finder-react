@@ -1,3 +1,3 @@
 export function getFullYear(date: string) {
-  return new Date(date).getFullYear;
+  return new Date(date).getFullYear();
 }

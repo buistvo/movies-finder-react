@@ -1,7 +1,6 @@
 import { Movie } from '../types/movie';
 
 export const INITIAL_MOVIE_FORM_VALUE: Movie = {
-  id: null,
   imageUrl: '',
   name: '',
   releaseDate: new Date().toISOString().slice(0, 10),
