@@ -11,6 +11,7 @@ import {
 import SearchLogoIcon from '/images/svg/magnifying-glass-svgrepo-com.svg';
 import { useLoaderData } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 export async function movieDetailsLoader({
   params,
@@ -29,6 +30,7 @@ export function MovieDetailsRoot() {
 
   return (
     <DetailsContainer>
+      <Outlet />
       <TopContainerHeader>
         <AppLogo />
         <Link to={linkUrl}>

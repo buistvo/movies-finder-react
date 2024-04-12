@@ -34,16 +34,57 @@ export class MoviesService {
     return this.mapResponse(response.data);
   }
 
+  async create(
+    movie: Movie,
+    cancellationToken?: CancelTokenSource
+  ): Promise<Movie> {
+    const response = await axios.post<MoviesResponse>(
+      `http://localhost:4000/movies/`,
+      {
+        cancelToken: cancellationToken?.token,
+        ...this.mapToRequest(movie),
+      }
+    );
+    return this.mapResponse(response.data);
+  }
+
+  async update(
+    movie: Movie,
+    cancellationToken?: CancelTokenSource
+  ): Promise<Movie> {
+    const response = await axios.put<MoviesResponse>(
+      `http://localhost:4000/movies/`,
+      {
+        cancelToken: cancellationToken?.token,
+        ...this.mapToRequest(movie),
+      }
+    );
+    return this.mapResponse(response.data);
+  }
+
   mapResponse(response: MoviesResponse): Movie {
     return {
-      id: response.id,
+      id: response.id || 0,
       imageUrl: response.poster_path,
       name: response.title,
-      releaseDate: new Date(response.release_date),
+      releaseDate: response.release_date,
       genreList: response.genres,
       rating: response.vote_average,
       duration: response.runtime,
       description: response.overview,
+    };
+  }
+
+  mapToRequest(movie: Movie): MoviesResponse {
+    return {
+      genres: movie.genreList,
+      id: movie.id,
+      overview: movie.description,
+      poster_path: movie.imageUrl,
+      release_date: movie.releaseDate!,
+      runtime: movie.duration,
+      title: movie.name,
+      vote_average: movie.rating || 0,
     };
   }
 }

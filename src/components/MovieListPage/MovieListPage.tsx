@@ -14,7 +14,6 @@ import {
 import { Dialog, DialogProps } from '../Dialog/Dialog';
 import { Movie } from '../../types/movie';
 import { DialogContent, ConfirmButton } from '../Dialog/Dialog.styled';
-import { MovieForm } from '../MovieForm/MovieForm';
 import { useEffect, useState } from 'react';
 import axios, { CancelTokenSource } from 'axios';
 import { MovieQueryParams, MoviesResponse } from '../../types/movies-response';
@@ -22,10 +21,14 @@ import { MoviesService } from '../../services/movies.service';
 import { SORT_OPTIONS } from '../../constants/sort-options';
 import { useSearchParams } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppLogo } from '../AppLogo/AppLogo';
 
 export function MovieListPage() {
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamsUrl = `?${searchParams.toString()}`;
 
   const [cancelSource, setCancelSource] = useState<CancelTokenSource | null>(
     null
@@ -80,21 +83,6 @@ export function MovieListPage() {
     });
   }, [searchParams]);
 
-  function handleMovieEdit(movie: Movie) {
-    setDialogContent({
-      title: 'EDIT MOVIE',
-      children: (
-        <MovieForm
-          movie={movie}
-          onSubmit={() => {
-            setShowDialog(false);
-          }}
-        ></MovieForm>
-      ),
-    });
-    setShowDialog(true);
-  }
-
   function handleMovieDeleteClick() {
     setDialogContent({
       title: 'DELETE MOVIE',
@@ -133,8 +121,10 @@ export function MovieListPage() {
         <MoviesGrid>
           {movieList.map((movie, index) => (
             <MovieTile
-              key={movie.name + index}
-              onEdit={handleMovieEdit}
+              key={movie.name! + index}
+              onEdit={(movie) =>
+                navigate(`/${movie.id}/edit${searchParamsUrl}`)
+              }
               onDelete={handleMovieDeleteClick}
               movie={movie}
             ></MovieTile>
